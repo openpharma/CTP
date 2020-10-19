@@ -38,17 +38,18 @@ This procedure is constructed for null-hypotheses describing the equality of the
 The size of the hypothesis tree increases rapidly with growing number of elementary hypotheses. This can lead to memory and/or time problems!
 }
 \examples{
- \dontrun{
+
 hlist  <- list(1:2, c(1,3), c(1,4))
 htree  <- IntersectHypotheses(hlist)
 summary(htree)
 Display(htree)
 
 
-#compare in a set of six means all others to the fourth mean
+# compare in a set of six means all others to the fourth mean
+#
 five.to.fourth <- IntersectHypotheses(list(c(1,4),c(2,4),c(3,4),c(4,5),c(4,6)))
 Display(five.to.fourth)
-}
+
 }
 \seealso{
 \code{\link{AnalyseCTP}} \code{\link{Adjust_raw}}

@@ -19,9 +19,3 @@ Encoding: UTF-8
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2020-08-28 09:06:00 UTC; jordanp
-Author: Paul Jordan [aut, cre],
-  Herpers Matthias [aut], Bock Jürgen [aut]
-Maintainer: Paul Jordan <paul.jordan@roche.com>
-
-

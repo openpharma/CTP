@@ -5,9 +5,9 @@
 {
   sarr <- function(p1, p2, drawarr) {
     if (drawarr) 
-      m1 <<- rbind(m1, straightarrow(from = p1, to = p2, 
+      m1 <- rbind(m1, straightarrow(from = p1, to = p2,
                                      arr.pos = arr.pos, lwd = lwd, lty = lty, lcol = lcol, 
-                                     arr.col = arr.col, ...))
+                                     arr.col = arr.col, ...)) 
     else segments(p1[1], p1[2], p2[1], p2[2], lwd = lwd, 
                   lty = lty, col = lcol)
   }

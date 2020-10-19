@@ -33,7 +33,7 @@
 #'	\code{\link{summary.ctp}}
 #
 #'@examples
-#'	\dontrun{
+#'	
 #'	three.to.first <- IntersectHypotheses(list(1:2,c(1,3),c(1,4)))
 #'	Display(three.to.first)
 #'	summary(three.to.first)
@@ -62,7 +62,7 @@
 #'	
 #'	summary(result)
 #'	Display(result)
-#' }
+#' 
 #' 
 #'@export
 #'

@@ -4,7 +4,7 @@
 #' Generation of the hypotheses tree of a closed testing procedure (CTP). The function returns an object of \code{oldClass "ctp.str"};
 #'	\code{summary} and \code{Display} can be applied. 
 #'
-#' 
+#'
 #'	@param hyplst A list of integer vectors representing the elementary hypotheses. 
 #'
 #' @details
@@ -35,17 +35,18 @@
 #'	\code{\link{AnalyseCTP}} \code{\link{Adjust_raw}}
 #'
 #' @examples
-#'  \dontrun{
+#' 
 #'	hlist  <- list(1:2, c(1,3), c(1,4))
 #'	htree  <- IntersectHypotheses(hlist)
 #'	summary(htree)
 #'	Display(htree)
 #'	
 #'	
-#'	#compare in a set of six means all others to the fourth mean
+#'	# compare in a set of six means all others to the fourth mean
+#'	#
 #'	five.to.fourth <- IntersectHypotheses(list(c(1,4),c(2,4),c(3,4),c(4,5),c(4,6)))
 #'	Display(five.to.fourth)
-#' }
+#'	
 #'	@export	
 	IntersectHypotheses <- function(hyplst)
 {

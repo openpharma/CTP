@@ -52,14 +52,13 @@
 #'
 #'	@examples
 #'			
-#'	\dontrun{
 #'		data(pasi)
 #'		three.to.first <- IntersectHypotheses(list(1:2,c(1,3),c(1,4)))
 #'		Display(three.to.first)
 #'		pasi.ctp.F1 <- AnalyseCTP(three.to.first,pasi.ch~dose,pasi)
 #'		summary(pasi.ctp.F1)
 #'		Display(pasi.ctp.F1)
-#' }
+#'		
 #' @export
 
 AnalyseCTP <- function(ctp.struc, model, dataset, factor.name = NULL, test.name = "F",...)

@@ -72,8 +72,11 @@ summary.ctp.str <- function(object,...)
   } 
   
 
+  # From   <- Con %>% dplyr::select(level=levold,hyp.no=hypold) %>% 
+  #   left_join(tree,by = c("level", "hyp.no")) %>% 
+  #   rename(Hypothesis_1 =hypothesis.name,Level_1=level )
   From   <- Con %>% dplyr::select(level=levold,hyp.no=hypold) %>% 
-    left_join(tree,by = c("level", "hyp.no")) %>% 
+    left_join(tree,by = c("level", "hyp.no")) %>% suppressMessages() %>%
     rename(Hypothesis_1 =hypothesis.name,Level_1=level ) 
   To   <- Con %>% dplyr::select(level=levnew,hyp.no=hypnew) %>% 
     left_join(tree,by = c("level", "hyp.no")) %>% 

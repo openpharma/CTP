@@ -39,7 +39,7 @@ The adjusted p-value is calculated as the maximum of the raw p-value from the cu
 all subsequent hypotheses that contain the current hypothesis.
 }
 \examples{
-\dontrun{
+
 three.to.first <- IntersectHypotheses(list(1:2,c(1,3),c(1,4)))
 Display(three.to.first)
 summary(three.to.first)
@@ -68,7 +68,7 @@ result <- Adjust_raw(ctp.struc=three.to.first, p.value=p.val
 
 summary(result)
 Display(result)
-}
+
 
 }
 \seealso{

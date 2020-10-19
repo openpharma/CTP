@@ -51,14 +51,13 @@ This procedure is constructed for testing differences and two-sided hypotheses,
 }
 \examples{
 		
-\dontrun{
 	data(pasi)
 	three.to.first <- IntersectHypotheses(list(1:2,c(1,3),c(1,4)))
 	Display(three.to.first)
 	pasi.ctp.F1 <- AnalyseCTP(three.to.first,pasi.ch~dose,pasi)
 	summary(pasi.ctp.F1)
 	Display(pasi.ctp.F1)
-}
+	
 }
 \seealso{
 \code{\link{IntersectHypotheses}}, \code{\link{Display}}, \code{\link{summary.ctp.str}},  \code{\link{summary.ctp}},

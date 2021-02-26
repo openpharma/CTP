@@ -40,9 +40,13 @@ ctp.prob <-
 ctp.linHyp <- function(CTPparms)
 {
   Mod    <- CTPparms$model
-  lm1    <- lm(formula = eval(Mod), data = CTPparms$data)
+  environment(Mod) <- environment() # scope in df and not where model was created
   Fac    <- CTPparms$facname
-  em_lm1 <- emmeans(lm1,Fac)
+  
+  df <- CTPparms$data
+  lm1 <- lm(formula = Mod, data = df)
+  
+  em_lm1 <- emmeans(lm1, Fac)
   struc  <- CTPparms$hyplist
   CC     <- mkContrasts(struc)
   p1 <- c()

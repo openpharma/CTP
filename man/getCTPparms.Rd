@@ -21,7 +21,7 @@ By default the first variable of the right-hand side of the model formula is use
     \item \code{"kruskal"} -Kruskal-Wallis-Test
     \item \code{"chisq"} - Chi square test
     \item \code{"prob"} - Fisher's exact test for total number of observations <200 else Chi square test
-    \item \code{"lgrank"} - Logrank-test 
+    \item \code{"lgrank"} - Logrank-test
     \item \code{"jonckheere"} - Jonckheere-Terpstra test of ordered alternatives
 }}
 }

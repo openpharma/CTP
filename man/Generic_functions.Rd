@@ -33,8 +33,8 @@ Display(object, ...)
 \itemize{
 \item \code{summary.ctp.str} provides lists with dataframes comprising the hypothesis names as strings
      and the relationship between the hypotheses.
-\item \code{summary.ctp} provides a table of hypotheses, raw p-values and 
-    adjusted p-values. 
+\item \code{summary.ctp} provides a table of hypotheses, raw p-values and
+    adjusted p-values.
  }
 }
 \description{
@@ -43,11 +43,11 @@ whereas the functions \code{summary.ctp} and \code{Display.ctp} summarise and pl
 }
 \details{
 @name Generic_Functions
- 
+
  @aliases summary Display
 }
 \note{
-\code{Disply.ctp.str} plots the hypothesis tree. \cr \code{Display.ctp} plots the hypothesis 
+\code{Disply.ctp.str} plots the hypothesis tree. \cr \code{Display.ctp} plots the hypothesis
     tree together with the unadjusted and adjusted p-values.
 }
 \seealso{

@@ -42,7 +42,7 @@ TestingSet <- function(ctp.struc,Hyp)
     dplyr::select(Level_1,Hypothesis_1,Level_2,Hypothesis_2) %>%
     arrange(Level_1,Hypothesis_1)
   XX <- list()
-  XX[[1]] <- Connections %>% filter(Level_1==1 & Hypothesis_1==Hyp)
+  XX[[1]] <- Connections %>% dplyr::filter(Level_1==1, Hypothesis_1==Hyp)
   if(max_lev > 2)
   {
     for(i in 2:(max_lev-1)) XX[[i]] <- subset(Connections,Level_1==i & Hypothesis_1 %in% XX[[i-1]]$Hypothesis_2)

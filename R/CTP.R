@@ -4,7 +4,7 @@
 #' 	the comparison of population parameters based on independent samples.
 #'
 #' @docType package
-#' @name xCTP
+#' @name CTP
 #' @details
 #' 	Library of functions to design and analyze closed testing procedures for
 #' 	the comparison of population parameters based on independent samples. The function \code{\link{IntersectHypotheses}}

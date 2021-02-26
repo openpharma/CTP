@@ -50,9 +50,9 @@ summary.ctp <- function(object,digits=4,...)
     cat("\nSummary of Closed Testing Procedure\n===================================\n\n")
     if(!is.null(Parms$model)) cat(subtxt,"\n")
     if(!is.null(Parms$level)) cat("\nFactor levels:",levtxt,"\n\n")
-    cat("Hypotheses and p-values\n-----------------------\n\n")
-
-    print(X[,c(3,2,4,5)],row.names=FALSE,digits=digits)
+    cat("Elementary Hypotheses and p-values\n----------------------------------\n\n")
+    X2 <- subset(X,Level==1)
+    print(X2[,c(3,4,5)],row.names=FALSE,digits=digits)
     invisible()
   }
 #' @rdname Generic_functions
@@ -80,10 +80,6 @@ summary.ctp.str <- function(object,...)
                   left_join(tree,by = c("level", "hyp.no"))  %>%
                    rename(Hypothesis_2 =hypothesis.name,Level_2=level )
 
-
-  # Connections <- bind_cols(From,To) %>% suppressMessages() %>%
-  #   dplyr::select(Level_1,Hypothesis_1,Level_2,Hypothesis_2) %>%
-  #   arrange(Level_1,Hypothesis_1)  %>% suppressMessages()
 
 
   Connections  <- cbind(From,To) %>%
@@ -133,6 +129,7 @@ Display <- function(object, ...) UseMethod("Display")
     pvch      <- ifelse(pv < 0.001, "(p<0.001)", paste("(p=", pv, ")"))
     pvadj     <- round(tree$pvalue.adj, 3)
     pvadjch   <- ifelse(pvadj < 0.001, "p<0.001", paste("p=", pvadj))
+    pvadjch   <- ifelse(is.na(pvadj), "", pvadj)
     Names     <- paste(Names, "\n", pvadjch, "\n", pvch, sep = "")
   }
 

@@ -7,9 +7,7 @@
 #' @param ... Additional arguments for the chosen test
 #'
 #' @return A data.frame with the hypotheses and the unadjusted p-values
-#'
-#' @export
-#'
+
 CTPcompare <- function(CTPparms,...)
 {
   L1 <- CTPparms$hyplist
@@ -17,15 +15,7 @@ CTPcompare <- function(CTPparms,...)
   l2 <- sapply(L1,length)
   pval <- NULL
 
-
-  if(CTPparms$test=="ctp.F")
-  {
-   pvalues <- ctp.linHyp(CTPparms)
-  }
-
-  if(CTPparms$test!="ctp.F")
-  {
-
+ 
     for (i in 1:l1)
     {
 
@@ -46,7 +36,6 @@ CTPcompare <- function(CTPparms,...)
       }
     }
     pvalues <- data.frame(CTPparms$hypnames, pvalue = pval)
-  }
 
   pvalues
 }

@@ -7,9 +7,9 @@
 TestingSet(ctp.struc, Hyp)
 }
 \arguments{
-\item{\code{ctp.struc}}{Object of class \code{ctp.str}.}
+\item{ctp.struc}{Object of class \code{ctp.str}.}
 
-\item{\code{Hyp}}{Elementary hypothesis (character variable).}
+\item{Hyp}{Elementary hypothesis (character variable).}
 }
 \value{
 The testing set for the elementary hypothesis (character vector).
@@ -19,8 +19,9 @@ Testing set for an elementary hypothesis
 }
 \examples{
 
-	three.to.first <- IntersectHypotheses(list(1:2,c(1,3),c(1,4)))
-   Set13  <- TestingSet(three.to.first,Hyp="[13]")
-	Set=13
-
+	Pairwise <- IntersectHypotheses(list(c(1,2), c(1,3),
+	                                c(1,4), c(2,3), c(2,4), c(3,4)))
+   Set24    <- TestingSet(Pairwise,"[24]")
+   Set24
+   
 }

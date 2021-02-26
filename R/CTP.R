@@ -4,10 +4,10 @@
 #' 	the comparison of population parameters based on independent samples.
 #'
 #' @docType package
-#' @name xCTP
+#' @name CTP
 #' @details
-#' 	Library of functions to design and analyze closed testing procedures for
-#' 	the comparison of population parameters based on independent samples. The function \code{\link{IntersectHypotheses}}
+#' 	Library of functions to design and analyze closed testing procedures for treatment comparisons.
+#' 	The comparison of the population parameters are based on independent samples. The function \code{\link{IntersectHypotheses}}
 #' 	creates the hypothesis tree (closure set) of a closed testing procedure. All possible intersecting hypotheses derived from
 #' 	the list of elementary hypotheses(i.e. the hypotheses to be tested) are produced. The resultant hypothesis tree
 #' 	will consist of the elementary hypotheses as well as all subsequent intersected hypotheses. The procedure ends when

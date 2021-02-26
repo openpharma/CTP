@@ -1,16 +1,17 @@
 #' Testing set for an elementary hypothesis
 #'
-#' @param \code{ctp.struc} Object of class \code{ctp.str}.
-#' @param \code{Hyp} Elementary hypothesis (character variable).
+#' @param ctp.struc Object of class \code{ctp.str}.
+#' @param Hyp Elementary hypothesis (character variable).
 #'
 #' @return The testing set for the elementary hypothesis (character vector).
 #'
 #' @examples
 #'
-#'		three.to.first <- IntersectHypotheses(list(1:2,c(1,3),c(1,4)))
-#'    Set13  <- TestingSet(three.to.first,Hyp="[13]")
-#'		Set=13
-#'
+#'		Pairwise <- IntersectHypotheses(list(c(1,2), c(1,3),
+#'		                                c(1,4), c(2,3), c(2,4), c(3,4)))
+#'    Set24    <- TestingSet(Pairwise,"[24]")
+#'    Set24
+#'    
 #' @export
 
 TestingSet <- function(ctp.struc,Hyp)
@@ -51,7 +52,7 @@ TestingSet <- function(ctp.struc,Hyp)
   XXfin   <- NULL
   for(i in 1:(max_lev-1)) XXfin <- rbind(XXfin,XX[[i]])
   HypGlob  <- HypNam$hypothesis.name[nHyp]
-  SetA     <- sort(unique(c(XXfin$Hypothesis_1,XXfin$Hypothesis_2)))
+  SetA     <- unique(c(XXfin$Hypothesis_1,XXfin$Hypothesis_2))
   SetA
 }
 

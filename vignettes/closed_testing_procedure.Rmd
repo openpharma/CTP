@@ -66,6 +66,14 @@ references:
   type: article-journal
   issued:
     year: 1976
+
+- id: emmeans
+  title: Estimated Marginal Means, aka Least-Squares Means
+  author:
+  - family: Russell
+  - family: Lenth
+  issued:
+    year: 2020
 ---
 
 
@@ -102,6 +110,8 @@ As the null hypothesis $H_i$ is rejected only if the null hypothteses $H_I \in \
 
 # Implementation
 
+The package was designed with special reference to treatment comparisons in ANOVA-like stuos.
+
 ## Closure set
 
 The hypothesis tree of the closed testing procedure is created using the function **IntersectHypotheses**.
@@ -110,9 +120,9 @@ The hypothesis tree of the closed testing procedure is created using the functio
 		  
 In case of single hypotheses (ie. if the hypothesis can be described by a single integer vector eg. **(1,3,5)** the test (F-Test, Kruskal-Wallis-test, probability test, logrank test, ....) is applied directly.
   
-For combined hypotheses (i.e. for hypotheses described by several non-overlapping integer vectors eg. **(1,2), (3,4)**, The procedure differs for the F-test and other tests.  
+For combined hypotheses (i.e. for hypotheses described by several non-overlapping integer vectors eg. **(1,2), (3,4)**, The procedure differs for (generalised) linear hypotheses and other tests.  
   
-In case of the F-test the contrast matrices for the single hypotheses included are combined and these contrasts are tested simultaneously. For all other tests first the p-values $p_1, p_2, \ldots ,p_m$ for the single hypotheses are calculated, and than these are combined by Fisher's combination rule:
+In case of the generalised linear hypotheses, the contrast matrices for the single hypotheses included are combined and these contrasts are tested simultaneously. Therefore, funtions from the package **emmeans**[@emmeans] are used. For all other tests, first the p-values $p_1, p_2, \ldots ,p_m$ for the single hypotheses are calculated, and than these are combined by Fisher's combination rule:
 
 If all m hypotheses are assumed to be independent, the test statistics $X$ follows under $H_0$ a $\chi^2$-distribution with 2m degrees of freedom:
 $$ X=-2\sum_{i=1}^{m}\ln(p_i) \sim \chi_{2m}^2$$
@@ -128,8 +138,17 @@ The function **AnalyseCTP** calculates all local and adjusted p-value for all hy
 
 With the function **Adjust_raw**, it is also possible to use p-values that have been calculated by other functions or programs for the calculation  of the adjusted p-values.
 
+## Testing set for a specific elementary hypothesis
 
-# Examples
+The testing set for a specific elementary hyothesis can be shown by the function **TestingSet**.
+
+```{r}
+library(CTP)
+		Pairwise <- IntersectHypotheses(list(c(1,2), c(1,3),
+		                                c(1,4), c(2,3), c(2,4), c(3,4)))
+    Set24    <- TestingSet(Pairwise,"[24]")
+    Set24
+```
 
 ## Comparing means
 
@@ -147,22 +166,11 @@ data(pasi)
 three.to.first <- IntersectHypotheses(list(1:2,c(1,3),c(1,4)))
 Display(three.to.first,Type="s",arrow=TRUE)
 pasi.ctp.F1    <- AnalyseCTP(three.to.first,pasi.ch~dose,pasi)
-xsx            <- summary(three.to.first)
 
 summary(pasi.ctp.F1)
 Display(pasi.ctp.F1)
 ```
-```{r }
 
-data(pasi)
-three.to.first <- IntersectHypotheses(list(1:2,c(1,3),c(1,4)))
-Display(three.to.first,Type="s",arrow=TRUE)
-pasi.ctp.F1    <- AnalyseCTP(three.to.first,pasi.ch~dose,pasi)
-xsx            <- summary(three.to.first)
-
-summary(pasi.ctp.F1)
-Display(pasi.ctp.F1)
-```
 
 ## Another hypothesis structure
 
@@ -181,7 +189,12 @@ Display(pasi.ctp.F2)
 
 ## Other tests
 
-For the same hypotheis structure, other tests can also be used:
+For the same hypothesis structure, other tests can also be used:
+
+### Generalized Linear Models
+
+
+
 
 ### Kruskal-Wallis test of trend for all single hypotheses
 

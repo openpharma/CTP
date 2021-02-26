@@ -1,7 +1,7 @@
 
 # Closed Testing Procedures
 
-This R package provides functions for creating the closure set of multiple hypotheses and performing closed testing procedures.
+This R package provides functions for creating the closure set of multiple hypotheses and performing closed testing procedures with special reference to treatment comparisons.
 
 
 # Acknowledgement

@@ -1,9 +1,9 @@
 # Auxiliary functions
 #
-#  Extraxting p-values from several test functions. For small contingency tables (binary variable),
+# Extraxting p-values from several test functions. For small contingency tables (binary variable),
 # Fisher's exact test is applied for larger tables a chisquare test.
-# 
-# 
+#
+#
 #
 #
 
@@ -19,7 +19,7 @@ ctp.jonckheere <-function(resp, fac,nperm=5000,...)
 		xfac	<- ordered(fac)
 		pval <- jonckheere.test(resp, xfac,...)$p.value
 		#options(oldoptions)
-	pval	
+	pval
 	}
 
 ctp.lgrank <- function(resp, fac)
@@ -37,64 +37,18 @@ ctp.prob <-
 	}
 
 # Linear hypotheses (F-Test)
-ctp.lin.hyp <- function(CTPparms, Lhyp.mat)
+ctp.linHyp <- function(CTPparms)
 {
-  
-  obj <- CTPparms$lm.obj
-  factor.name <- CTPparms$facname
-  
-  
-  Coefficients <- obj$coefficients
-  
-  oo	<- attr(obj$term,"term.lab")
-  
-  #print(oo)
-  
-  Loo	<- length(oo)
-  Noo	<- (1:Loo)[oo==factor.name]
-  subscripts <- obj$assign==Noo
-  f.levels <- obj$xlevels		
-  
-  #print(subscripts) #$$$
-  #print(f.levels);print(Coefficients)	#$$$
-  
-  Coeff 	<- Coefficients[subscripts]
-  
-  # cat("\n\nHallo Paule! -- 8\n")
-  # print(obj$contr)
-  
-  CC	 	<- obj$contr[[factor.name]]
-  
-  ## print(Con)
-  #cn		<- length(obj$xlevels$G)
-  #cn		<- length(obj$xlevels[[factor.name]])
-  #CC		<- eval(call(Con,cn))
-  ##print(Coeff);print(CC)
-  est <- CC %*% Coeff
-  #print(est)
-  lhyp <- t(Lhyp.mat) %*% est
-  #print(lhyp)
-  #########################################
-  # Covariance Matrix of linear Hpothesis #
-  #########################################
+  Mod    <- CTPparms$model
+  lm1    <- lm(formula = eval(Mod), data = CTPparms$data)
+  Fac    <- CTPparms$facname
+  em_lm1 <- emmeans(lm1,Fac)
+  struc  <- CTPparms$hyplist
+  CC     <- mkContrasts(struc)
+  p1 <- c()
 
-    
-    Subs <- unlist(subscripts)
-    obj.sum <- summary(obj)
-    sR <- obj.sum$sigma
-    DF <- obj$df.residual
-    xcov <- obj.sum$cov.unscaled
-    acov <- xcov[Subs, Subs] * sR * sR
-    ycov <- CC %*% acov %*% t(CC)
-    #print(ginverse(t(Lhyp.mat) %*% ycov %*% Lhyp.mat))
-    fc <- t(lhyp) %*% ginv(t(Lhyp.mat) %*% ycov %*% Lhyp.mat) %*% lhyp
-    stdErr <- sqrt(t(Lhyp.mat) %*% ycov %*% Lhyp.mat)
-    dfc <- ncol(Lhyp.mat)
-    fc <- fc/dfc
-    cpvalue <- 1. - pf(fc, dfc, DF)
-    #result <- list(call = obj$call, factor.names = factor.name, factor.levels = f.levels, Lin.hyp = Lhyp.mat, stdErr = stdErr, dfc = dfc, DF = DF, estimates = lhyp, F = fc, p.value = cpvalue)
-    #oldClass(result) <- "Lin.hyp"
-    ## print(result)
-    #result
-    cpvalue
+  for(i in 1:length(CC)) p1[i] <- test(contrast(em_lm1,list(c=CC[i])),joint=TRUE)$p.value
+
+  pvalues <- data.frame(CTPparms$hypnames, pvalue = p1)
+  pvalues
 }

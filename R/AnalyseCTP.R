@@ -69,11 +69,12 @@ AnalyseCTP <- function(ctp.struc, model, data, factor.name = NULL, test.name = "
 		if(!(oldClass(model) == "formula")) stop("Second argument must be a formula")
 		if(!(oldClass(data) == "data.frame")) 	stop("Third argument must be a data frame")
 
+  
 		tests <- c("F", "kruskal", "chisq", "prob", "lgrank", "jonckheere","glm")
 		if(!(test.name %in% tests)) stop("test.name wrongly specified")
-
+     
 		 CTPparms <- getCTPparms(ctp.struc=ctp.struc, model=model, dataset=data,
-		                         factor.name = factor.name, test.name = test.name)
+		                         factor.name = factor.name, test.name = test.name,...)
 		 if(test.name == "F")   pvalues  <- ctp.linHyp(CTPparms=CTPparms)
 		 if(test.name == "glm") pvalues  <- ctp.linHyp(CTPparms=CTPparms,...)
 		 if(!(test.name %in% c("F","glm")))  pvalues <- CTPcompare(CTPparms=CTPparms,...)

@@ -12,13 +12,11 @@ ctp.kruskal <- function(resp, fac,...) kruskal.test(resp~fac,...)$p.value
 
 ctp.jonckheere <-function(resp, fac,nperm=5000,...)
 	{
-  #oldoptions <- options()
-  #options(warn = -1)
 		xfac	<- ordered(fac)
 		pval <- jonckheere.test(resp, xfac,...)$p.value
-		#options(oldoptions)
 	pval
-	}
+}
+
 
 ctp.lgrank <- function(resp, fac)
 	{

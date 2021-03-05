@@ -44,12 +44,24 @@ summary.ctp <- function(object,digits=4,...)
                     collapse = ", ")
     subtxt <- paste("Model :",Parms$model[2],
                     "~", Parms$model[3], ", test :", strsplit(Parms$test,split="[.]")[[1]][2])
+    
+    if(!is.null(Parms$test.opt))
+      {
+       l_opt <- length(Parms$test.opt)
+       n_opt <- names(Parms$test.opt)
+       opt   <- unlist(Parms$test.opt)
+       subtxt2 <- ""
+       for (i in 1:l_opt) subtxt2 <- paste(subtxt2,n_opt[i],":",opt[i],"  ")
+      }
+    
     X <- object$pvalues
     names(X) <- c("x","Level","Hypothesis","raw p-value","adj. p-value")
 
     cat("\nSummary of Closed Testing Procedure\n===================================\n\n")
     if(!is.null(Parms$model)) cat(subtxt,"\n")
+    if(!is.null(Parms$test.opt)) cat("\nTest options:",subtxt2,"\n")
     if(!is.null(Parms$level)) cat("\nFactor levels:",levtxt,"\n\n")
+      
     cat("Elementary Hypotheses and p-values\n----------------------------------\n\n")
     X2 <- subset(X,Level==1)
     print(X2[,c(3,4,5)],row.names=FALSE,digits=digits)

@@ -17,13 +17,16 @@
 #'			\item \code{"prob"} - Fisher's exact test for total number of observations <200 else Chi square test
 #'			\item \code{"lgrank"} - Logrank-test
 #'			\item \code{"jonckheere"} - Jonckheere-Terpstra test of ordered alternatives
+#'			\item \code{"glm"} - generlaized linear model
 #'		}
-
+#' @param ... Additional arguments for the chosen test		
+#'		
+#'
 #'
 #' @return A list with CTP parameters
 #'
 
-getCTPparms <- function(ctp.struc, model, dataset, factor.name = NULL, test.name = "F")
+getCTPparms <- function(ctp.struc, model, dataset, factor.name = NULL, test.name = "F",...)
 {
   hyplist       <- ctp.struc$hypothesis
 	hh.test       <- paste("ctp.", test.name, sep = "")
@@ -40,12 +43,18 @@ getCTPparms <- function(ctp.struc, model, dataset, factor.name = NULL, test.name
 	  hh.nlevel     <- length(hh.level)
 	  hh.resp       <- getResponse(model,dataset)
 
+	  
+	  args  <- list(...)
+	  nargs <- length(args)
+	  if(nargs > 0) test.opt <- args
+	    else test.opt <- NULL
+	  
 	 # if(hh.test == "ctp.F")  hh.lm.obj <- lm(formula = eval(model), data = hh.dataset)
 	 #   else hh.lm.obj <- NA
 
 	    Parms <- list(hyplist=hyplist,hypnames=hypnames,connections=connections
 	                  ,model=model,data=hh.dataset,test=hh.test,fac=hh.fac,facname=hh.facname
-	    							,level=hh.level,nlevel=hh.nlevel,resp=hh.resp,respname=hh.respname)
+	    							,level=hh.level,nlevel=hh.nlevel,resp=hh.resp,respname=hh.respname,test.opt=test.opt)
 	    oldClass(Parms) <- "CTPparms"
 	    Parms
 }

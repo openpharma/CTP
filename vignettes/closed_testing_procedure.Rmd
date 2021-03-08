@@ -110,7 +110,7 @@ As the null hypothesis $H_i$ is rejected only if the null hypothteses $H_I \in \
 
 # Implementation
 
-The package was designed with special reference to treatment comparisons in ANOVA-like stuos.
+The package was designed with special reference to treatment comparisons in ANOVA-like situations.
 
 ## Closure set
 
@@ -193,8 +193,14 @@ For the same hypothesis structure, other tests can also be used:
 
 ### Generalized Linear Models
 
+As an example, a positive response is defined as a change from baseline PASI score greater than 50. The new variable `Resp` has then the value 1 if `pasi.ch > 50` or 0 otherwise. The correspondinn model is chosen to be  generalized linear model with logit-link, as implemented in `glm`.  
 
+```{r}
+pasi$Resp <- ifelse(pasi$pasi.ch > 50,1,0)
 
+pasi.ctp_bin <-AnalyseCTP(three.to.first,Resp~dose,pasi,test.name="glm",family="binomial")
+summary(pasi.ctp_bin)
+```
 
 ### Kruskal-Wallis test of trend for all single hypotheses
 
@@ -206,14 +212,9 @@ Display(pasi.ctp.K)
 
 ### Jonckheere-Terpstra test of trend for all single hypotheses
 
-```{r}
+```{r,warning=FALSE,message=FALSE}
 pasi.ctp.J1 <- AnalyseCTP(dose.steps4,pasi.ch~dose,pasi, test="jonckheere",alternative="increasing")
-pasi.ctp.J2 <- AnalyseCTP(dose.steps4,pasi.ch~dose,pasi, test="jonckheere",alternative="two.sided")
 summary(pasi.ctp.J1)
-summary(pasi.ctp.J2)
-pasi.ctp.J3 <- AnalyseCTP(dose.steps4,pasi.ch~dose,pasi, test="jonckheere")
-summary(pasi.ctp.J3)
-Display(pasi.ctp.J1)
 ```
 
 ## Proportions
@@ -302,30 +303,41 @@ It is possible to use:
 * Use **summary** and **Display** on this object.
 
 ```{r}
-	xxx <- IntersectHypotheses(list(1:2,c(1,3),c(1,4)))
-  xxx$hypothesis
-  data.frame(xxx$hypnames)
-  xxx$hypnames
-  p.val<-c(0.05,0.04,0.02,0.08,0.03,0.03,0.04)
+		Pairwise <- IntersectHypotheses(list(c(1,2), c(1,3), c(1,4), c(2,3), c(2,4), c(3,4)))
+		Display(Pairwise)
+		summary(Pairwise)
+		
+		# the vector of p-values calculated by another software
+		
+		p.val <- c(
+		  0.4374,
+		  0.6485,
+		  0.4103,
+		  0.2203,
+		  0.1302,
+		  0.6725,
+		  0.4704,
+		  0.3173,
+		  0.6762,
+		  0.7112,
+		  0.2866,
+		  0.3362,
+		  0.2871,
+		  0.4633)
 
-  Adjust_raw(xxx, p.val)
-	# the vector of p-values calculated by another software
-	# you may supply the hypothesis names as names of the vector
-	
-  result <- Adjust_raw(ctp.struc=three.to.first, p.value=p.val)
-	
-	summary(result)
-	
-	# details may be documented
-	
-	result<-Adjust_raw(ctp.struc=three.to.first, p.value=p.val
-	          ,dataset.name="mydata", factor.name="treatment"
-	          ,factor.levels=c("A","B","C","D"), model=y~treatment
-	          ,test.name="F")
-	
-	summary(result)
-	Display(result)
- 
+		result <- Adjust_raw(Pairwise, p.value=p.val)
+		
+		summary(result,digits=3)	
+				
+# details may be documented
+		
+		result <- Adjust_raw(Pairwise, p.value=p.val
+		                     ,dataset.name="my Data", factor.name="Factor"
+		                     ,factor.levels=c("A","B","C","D"), model=y~Factor
+		                     ,test.name="my Test")
+		
+		summary(result,digits=3)
+		Display(result) 
 ```
 
 ---

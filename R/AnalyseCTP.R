@@ -27,7 +27,7 @@
 #'			\item \code{"prob"} - Fisher's exact test for total number of observations <200 else Chi square test
 #'			\item \code{"lgrank"} - Logrank-test
 #'			\item \code{"jonckheere"} - Jonckheere-Terpstra test of ordered alternatives
-#'			\item \code{"glm"} - generalised linear model, from function \code{glm}.
+#'			\item \code{"glm"} - generalised linear model, using function \code{glm} from \code{stats}.
 #'		}
 #'	@param ... Additional arguments for the chosen test.
 #'

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CTP</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0.9000</span>
       </span>
     </div>
 
@@ -54,12 +54,15 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Flowchart.html">Flowchart how to use CTP</a>
-    </li>
-    <li>
       <a href="../articles/closed_testing_procedure.html">Closed Testing Procedure</a>
     </li>
+    <li>
+      <a href="../articles/Flowchart.html">Flowchart how to use CTP</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
@@ -72,13 +75,13 @@
 
       
 
-      </header><script src="closed_testing_procedure_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Closed Testing Procedure</h1>
                         <h4 class="author">Paul Jordan</h4>
             
-            <h4 class="date">2020-10-19</h4>
+            <h4 class="date">2021-03-08</h4>
       
       
       <div class="hidden name"><code>closed_testing_procedure.Rmd</code></div>
@@ -113,6 +116,7 @@
 <div id="implementation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#implementation" class="anchor"></a>Implementation</h1>
+<p>The package was designed with special reference to treatment comparisons in ANOVA-like situations.</p>
 <div id="closure-set" class="section level2">
 <h2 class="hasAnchor">
 <a href="#closure-set" class="anchor"></a>Closure set</h2>
@@ -122,8 +126,8 @@
 <h2 class="hasAnchor">
 <a href="#local-tests-ctp-for-a-given-hypothesis-tree" class="anchor"></a>Local tests CTP for a given “hypothesis tree”</h2>
 <p>In case of single hypotheses (ie. if the hypothesis can be described by a single integer vector eg. <strong>(1,3,5)</strong> the test (F-Test, Kruskal-Wallis-test, probability test, logrank test, ….) is applied directly.</p>
-<p>For combined hypotheses (i.e. for hypotheses described by several non-overlapping integer vectors eg. <strong>(1,2), (3,4)</strong>, The procedure differs for the F-test and other tests.</p>
-<p>In case of the F-test the contrast matrices for the single hypotheses included are combined and these contrasts are tested simultaneously. For all other tests first the p-values <span class="math inline">\(p_1, p_2, \ldots ,p_m\)</span> for the single hypotheses are calculated, and than these are combined by Fisher’s combination rule:</p>
+<p>For combined hypotheses (i.e. for hypotheses described by several non-overlapping integer vectors eg. <strong>(1,2), (3,4)</strong>, The procedure differs for (generalised) linear hypotheses and other tests.</p>
+<p>In case of the generalised linear hypotheses, the contrast matrices for the single hypotheses included are combined and these contrasts are tested simultaneously. Therefore, funtions from the package <strong>emmeans</strong><span class="citation">(Russell and Lenth 2020)</span> are used. For all other tests, first the p-values <span class="math inline">\(p_1, p_2, \ldots ,p_m\)</span> for the single hypotheses are calculated, and than these are combined by Fisher’s combination rule:</p>
 <p>If all m hypotheses are assumed to be independent, the test statistics <span class="math inline">\(X\)</span> follows under <span class="math inline">\(H_0\)</span> a <span class="math inline">\(\chi^2\)</span>-distribution with 2m degrees of freedom: <span class="math display">\[ X=-2\sum_{i=1}^{m}\ln(p_i) \sim \chi_{2m}^2\]</span> from which a p-value for the global hypothesis can be easily obtained.</p>
 <p>In case of trend tests, the same type of test is applied for all intermediate single tests.</p>
 </div>
@@ -134,111 +138,29 @@
 <p>The function <strong>AnalyseCTP</strong> calculates all local and adjusted p-value for all hypotheses in the closure set (hypothesis tree).</p>
 <p>With the function <strong>Adjust_raw</strong>, it is also possible to use p-values that have been calculated by other functions or programs for the calculation of the adjusted p-values.</p>
 </div>
+<div id="testing-set-for-a-specific-elementary-hypothesis" class="section level2">
+<h2 class="hasAnchor">
+<a href="#testing-set-for-a-specific-elementary-hypothesis" class="anchor"></a>Testing set for a specific elementary hypothesis</h2>
+<p>The testing set for a specific elementary hyothesis can be shown by the function <strong>TestingSet</strong>.</p>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">CTP</span>)
+        <span class="no">Pairwise</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/IntersectHypotheses.html">IntersectHypotheses</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">2</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">3</span>),
+                                        <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">4</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">3</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">4</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>,<span class="fl">4</span>)))
+    <span class="no">Set24</span>    <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/TestingSet.html">TestingSet</a></span>(<span class="no">Pairwise</span>,<span class="st">"[24]"</span>)
+    <span class="no">Set24</span>
+<span class="co">## [1] "[24]"     "[124]"    "[13][24]" "[234]"    "[1234]"</span></pre></body></html></div>
 </div>
-<div id="examples" class="section level1">
-<h1 class="hasAnchor">
-<a href="#examples" class="anchor"></a>Examples</h1>
 <div id="comparing-means" class="section level2">
 <h2 class="hasAnchor">
 <a href="#comparing-means" class="anchor"></a>Comparing means</h2>
 <p>The dataframe <strong>pasi</strong> comprises the changes in PASI-score (Psoirasis Area and Severity Index) from baseline within two month of 72 patients treated with three different doses of Etretin or Placebo in a double blind study.</p>
 <p>Testing the elementary hypotheses 1:2, 1:3, 1:4 simultaneously using the F-Test i.e. testing <span class="math inline">\(H_1: \mu_1=\mu_2\)</span>, <span class="math inline">\(H_2: \mu_1=\mu_3\)</span> and <span class="math inline">\(H_3: \mu_1=\mu_4\)</span> simultaneously. The groups with levels 2,3,4 are compared to the control (Placebo) group (level 1). In this specific example, the adjusted and unadjusted p-values are the same. All doses show a significant effect compared to Placebo</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">CTP</span>)
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">CTP</span>)
 
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">pasi</span>)
-<span class="no">three.to.first</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/IntersectHypotheses.html">IntersectHypotheses</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fl">1</span>:<span class="fl">2</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">3</span>),<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">4</span>)))
-<span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">three.to.first</span>,<span class="kw">Type</span><span class="kw">=</span><span class="st">"s"</span>,<span class="kw">arrow</span><span class="kw">=</span><span class="fl">TRUE</span>)</pre></body></html></div>
-<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-1-1.png" width="100%"></p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">pasi.ctp.F1</span>    <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/AnalyseCTP.html">AnalyseCTP</a></span>(<span class="no">three.to.first</span>,<span class="no">pasi.ch</span>~<span class="no">dose</span>,<span class="no">pasi</span>)
-<span class="no">xsx</span>            <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">three.to.first</span>)
-<span class="co">## New names:</span>
-<span class="co">## * hyp.no -&gt; hyp.no...2</span>
-<span class="co">## * hyp.no -&gt; hyp.no...5</span>
-<span class="co">## </span>
-<span class="co">## Hypotheses to be tested </span>
-<span class="co">## =======================</span>
-<span class="co">## </span>
-<span class="co">##  hyp.no level hypothesis.name</span>
-<span class="co">##       1     1            [12]</span>
-<span class="co">##       2     1            [13]</span>
-<span class="co">##       3     1            [14]</span>
-<span class="co">##       1     2           [123]</span>
-<span class="co">##       2     2           [124]</span>
-<span class="co">##       3     2           [134]</span>
-<span class="co">##       1     3          [1234]</span>
-<span class="co">## </span>
-<span class="co">## Connection structure of the hypotheses </span>
-<span class="co">## ======================================</span>
-<span class="co">## </span>
-<span class="co">##  Level      Connection</span>
-<span class="co">##      1   [12] -&gt; [123]</span>
-<span class="co">##      1   [12] -&gt; [124]</span>
-<span class="co">##      1   [13] -&gt; [123]</span>
-<span class="co">##      1   [13] -&gt; [134]</span>
-<span class="co">##      1   [14] -&gt; [124]</span>
-<span class="co">##      1   [14] -&gt; [134]</span>
-<span class="co">##      2 [123] -&gt; [1234]</span>
-<span class="co">##      2 [124] -&gt; [1234]</span>
-<span class="co">##      2 [134] -&gt; [1234]</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">pasi.ctp.F1</span>)
-<span class="co">## </span>
-<span class="co">## Summary of Closed Testing Procedure</span>
-<span class="co">## ===================================</span>
-<span class="co">## </span>
-<span class="co">## Model : pasi.ch ~ dose , test : F </span>
-<span class="co">## </span>
-<span class="co">## Factor levels: 1=Placebo, 2=ET.10mg, 3=ET.25mg, 4=ET.50mg </span>
-<span class="co">## </span>
-<span class="co">## Hypotheses and p-values</span>
-<span class="co">## -----------------------</span>
-<span class="co">## </span>
-<span class="co">##  Hypothesis Level raw p-value adj. p-value</span>
-<span class="co">##        [12]     1   4.748e-03    4.748e-03</span>
-<span class="co">##        [13]     1   2.737e-05    1.063e-04</span>
-<span class="co">##        [14]     1   1.826e-06    9.797e-06</span>
-<span class="co">##       [123]     2   1.063e-04    1.063e-04</span>
-<span class="co">##       [124]     2   9.797e-06    9.797e-06</span>
-<span class="co">##       [134]     2   1.736e-06    6.542e-06</span>
-<span class="co">##      [1234]     3   6.542e-06    6.542e-06</span>
-<span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">pasi.ctp.F1</span>)</pre></body></html></div>
-<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-1-2.png" width="100%"></p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r">
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">pasi</span>)
 <span class="no">three.to.first</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/IntersectHypotheses.html">IntersectHypotheses</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fl">1</span>:<span class="fl">2</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">3</span>),<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">4</span>)))
 <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">three.to.first</span>,<span class="kw">Type</span><span class="kw">=</span><span class="st">"s"</span>,<span class="kw">arrow</span><span class="kw">=</span><span class="fl">TRUE</span>)</pre></body></html></div>
 <p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-2-1.png" width="100%"></p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">pasi.ctp.F1</span>    <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/AnalyseCTP.html">AnalyseCTP</a></span>(<span class="no">three.to.first</span>,<span class="no">pasi.ch</span>~<span class="no">dose</span>,<span class="no">pasi</span>)
-<span class="no">xsx</span>            <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">three.to.first</span>)
-<span class="co">## New names:</span>
-<span class="co">## * hyp.no -&gt; hyp.no...2</span>
-<span class="co">## * hyp.no -&gt; hyp.no...5</span>
-<span class="co">## </span>
-<span class="co">## Hypotheses to be tested </span>
-<span class="co">## =======================</span>
-<span class="co">## </span>
-<span class="co">##  hyp.no level hypothesis.name</span>
-<span class="co">##       1     1            [12]</span>
-<span class="co">##       2     1            [13]</span>
-<span class="co">##       3     1            [14]</span>
-<span class="co">##       1     2           [123]</span>
-<span class="co">##       2     2           [124]</span>
-<span class="co">##       3     2           [134]</span>
-<span class="co">##       1     3          [1234]</span>
-<span class="co">## </span>
-<span class="co">## Connection structure of the hypotheses </span>
-<span class="co">## ======================================</span>
-<span class="co">## </span>
-<span class="co">##  Level      Connection</span>
-<span class="co">##      1   [12] -&gt; [123]</span>
-<span class="co">##      1   [12] -&gt; [124]</span>
-<span class="co">##      1   [13] -&gt; [123]</span>
-<span class="co">##      1   [13] -&gt; [134]</span>
-<span class="co">##      1   [14] -&gt; [124]</span>
-<span class="co">##      1   [14] -&gt; [134]</span>
-<span class="co">##      2 [123] -&gt; [1234]</span>
-<span class="co">##      2 [124] -&gt; [1234]</span>
-<span class="co">##      2 [134] -&gt; [1234]</span>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">pasi.ctp.F1</span>    <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/AnalyseCTP.html">AnalyseCTP</a></span>(<span class="no">three.to.first</span>,<span class="no">pasi.ch</span>~<span class="no">dose</span>,<span class="no">pasi</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">pasi.ctp.F1</span>)
 <span class="co">## </span>
@@ -249,17 +171,13 @@
 <span class="co">## </span>
 <span class="co">## Factor levels: 1=Placebo, 2=ET.10mg, 3=ET.25mg, 4=ET.50mg </span>
 <span class="co">## </span>
-<span class="co">## Hypotheses and p-values</span>
-<span class="co">## -----------------------</span>
+<span class="co">## Elementary Hypotheses and p-values</span>
+<span class="co">## ----------------------------------</span>
 <span class="co">## </span>
-<span class="co">##  Hypothesis Level raw p-value adj. p-value</span>
-<span class="co">##        [12]     1   4.748e-03    4.748e-03</span>
-<span class="co">##        [13]     1   2.737e-05    1.063e-04</span>
-<span class="co">##        [14]     1   1.826e-06    9.797e-06</span>
-<span class="co">##       [123]     2   1.063e-04    1.063e-04</span>
-<span class="co">##       [124]     2   9.797e-06    9.797e-06</span>
-<span class="co">##       [134]     2   1.736e-06    6.542e-06</span>
-<span class="co">##      [1234]     3   6.542e-06    6.542e-06</span>
+<span class="co">##  Hypothesis raw p-value adj. p-value</span>
+<span class="co">##        [12]   4.748e-03    4.748e-03</span>
+<span class="co">##        [13]   2.737e-05    1.063e-04</span>
+<span class="co">##        [14]   1.826e-06    9.797e-06</span>
 <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">pasi.ctp.F1</span>)</pre></body></html></div>
 <p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-2-2.png" width="100%"></p>
 </div>
@@ -267,10 +185,10 @@
 <h2 class="hasAnchor">
 <a href="#another-hypothesis-structure" class="anchor"></a>Another hypothesis structure</h2>
 <p>Testing the elementary hypotheses 1:2, 2:3, 3:4 simultaneously using the F-Test, i.e. testing <span class="math inline">\(H_1: \mu_1=\mu_2\)</span>, <span class="math inline">\(H_2: \mu_2=\mu_3\)</span> and <span class="math inline">\(H_3: \mu_3=\mu_4\)</span> simultaneously. This provides quite different results (compared to pasi.ctp.F1): No further improvement for higher doses.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">dose.steps4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/IntersectHypotheses.html">IntersectHypotheses</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fl">1</span>:<span class="fl">2</span>,<span class="fl">2</span>:<span class="fl">3</span>,<span class="fl">3</span>:<span class="fl">4</span>))
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">dose.steps4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/IntersectHypotheses.html">IntersectHypotheses</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fl">1</span>:<span class="fl">2</span>,<span class="fl">2</span>:<span class="fl">3</span>,<span class="fl">3</span>:<span class="fl">4</span>))
 <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">dose.steps4</span>,<span class="kw">arr</span><span class="kw">=</span><span class="fl">TRUE</span>)</pre></body></html></div>
 <p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-3-1.png" width="100%"></p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r">
+<div class="sourceCode" id="cb5"><html><body><pre class="r">
 
 
 <span class="no">pasi.ctp.F2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/AnalyseCTP.html">AnalyseCTP</a></span>(<span class="no">dose.steps4</span>,<span class="no">pasi.ch</span>~<span class="no">dose</span>,<span class="no">pasi</span>)
@@ -283,24 +201,46 @@
 <span class="co">## </span>
 <span class="co">## Factor levels: 1=Placebo, 2=ET.10mg, 3=ET.25mg, 4=ET.50mg </span>
 <span class="co">## </span>
-<span class="co">## Hypotheses and p-values</span>
-<span class="co">## -----------------------</span>
+<span class="co">## Elementary Hypotheses and p-values</span>
+<span class="co">## ----------------------------------</span>
 <span class="co">## </span>
-<span class="co">##  Hypothesis Level raw p-value adj. p-value</span>
-<span class="co">##        [12]     1   4.748e-03    1.506e-02</span>
-<span class="co">##        [23]     1   1.139e-01    1.139e-01</span>
-<span class="co">##        [34]     1   5.257e-01    5.257e-01</span>
-<span class="co">##       [123]     2   1.063e-04    1.063e-04</span>
-<span class="co">##    [12][34]     2   1.506e-02    1.506e-02</span>
-<span class="co">##       [234]     2   7.205e-02    7.205e-02</span>
-<span class="co">##      [1234]     3   6.542e-06    6.542e-06</span>
+<span class="co">##  Hypothesis raw p-value adj. p-value</span>
+<span class="co">##        [12]    0.004748      0.01506</span>
+<span class="co">##        [23]    0.113879      0.11388</span>
+<span class="co">##        [34]    0.525687      0.52569</span>
 <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">pasi.ctp.F2</span>)</pre></body></html></div>
 <p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-3-2.png" width="100%"></p>
 </div>
 <div id="other-tests" class="section level2">
 <h2 class="hasAnchor">
 <a href="#other-tests" class="anchor"></a>Other tests</h2>
-<p>For the same hypotheis structure, other tests can also be used:</p>
+<p>For the same hypothesis structure, other tests can also be used:</p>
+<div id="generalized-linear-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#generalized-linear-models" class="anchor"></a>Generalized Linear Models</h3>
+<p>As an example, a positive response is defined as a change from baseline PASI score greater than 50. The new variable <code>Resp</code> has then the value 1 if <code>pasi.ch &gt; 50</code> or 0 otherwise. The correspondinn model is chosen to be generalized linear model with logit-link, as implemented in <code>glm</code>.</p>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">pasi</span>$<span class="no">Resp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="no">pasi</span>$<span class="no">pasi.ch</span> <span class="kw">&gt;</span> <span class="fl">50</span>,<span class="fl">1</span>,<span class="fl">0</span>)
+
+<span class="no">pasi.ctp_bin</span> <span class="kw">&lt;-</span><span class="fu"><a href="../reference/AnalyseCTP.html">AnalyseCTP</a></span>(<span class="no">three.to.first</span>,<span class="no">Resp</span>~<span class="no">dose</span>,<span class="no">pasi</span>,<span class="kw">test.name</span><span class="kw">=</span><span class="st">"glm"</span>,<span class="kw">family</span><span class="kw">=</span><span class="st">"binomial"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">pasi.ctp_bin</span>)
+<span class="co">## </span>
+<span class="co">## Summary of Closed Testing Procedure</span>
+<span class="co">## ===================================</span>
+<span class="co">## </span>
+<span class="co">## Model : Resp ~ dose , test : glm </span>
+<span class="co">## </span>
+<span class="co">## Test options:  family : binomial    </span>
+<span class="co">## </span>
+<span class="co">## Factor levels: 1=Placebo, 2=ET.10mg, 3=ET.25mg, 4=ET.50mg </span>
+<span class="co">## </span>
+<span class="co">## Elementary Hypotheses and p-values</span>
+<span class="co">## ----------------------------------</span>
+<span class="co">## </span>
+<span class="co">##  Hypothesis raw p-value adj. p-value</span>
+<span class="co">##        [12]    0.036876     0.036876</span>
+<span class="co">##        [13]    0.001952     0.005163</span>
+<span class="co">##        [14]    0.001577     0.003370</span></pre></body></html></div>
+</div>
 <div id="kruskal-wallis-test-of-trend-for-all-single-hypotheses" class="section level3">
 <h3 class="hasAnchor">
 <a href="#kruskal-wallis-test-of-trend-for-all-single-hypotheses" class="anchor"></a>Kruskal-Wallis test of trend for all single hypotheses</h3>
@@ -314,25 +254,20 @@
 <span class="co">## </span>
 <span class="co">## Factor levels: 1=Placebo, 2=ET.10mg, 3=ET.25mg, 4=ET.50mg </span>
 <span class="co">## </span>
-<span class="co">## Hypotheses and p-values</span>
-<span class="co">## -----------------------</span>
+<span class="co">## Elementary Hypotheses and p-values</span>
+<span class="co">## ----------------------------------</span>
 <span class="co">## </span>
-<span class="co">##  Hypothesis Level raw p-value adj. p-value</span>
-<span class="co">##        [12]     1   2.350e-02    5.605e-02</span>
-<span class="co">##        [23]     1   1.655e-01    1.655e-01</span>
-<span class="co">##        [34]     1   4.255e-01    4.255e-01</span>
-<span class="co">##       [123]     2   1.466e-03    1.466e-03</span>
-<span class="co">##    [12][34]     2   5.605e-02    5.605e-02</span>
-<span class="co">##       [234]     2   6.988e-02    6.988e-02</span>
-<span class="co">##      [1234]     3   7.557e-05    7.557e-05</span>
+<span class="co">##  Hypothesis raw p-value adj. p-value</span>
+<span class="co">##        [12]      0.0235      0.05605</span>
+<span class="co">##        [23]      0.1655      0.16554</span>
+<span class="co">##        [34]      0.4255      0.42546</span>
 <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">pasi.ctp.K</span>)</pre></body></html></div>
-<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-4-1.png" width="100%"></p>
+<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
 </div>
 <div id="jonckheere-terpstra-test-of-trend-for-all-single-hypotheses" class="section level3">
 <h3 class="hasAnchor">
 <a href="#jonckheere-terpstra-test-of-trend-for-all-single-hypotheses" class="anchor"></a>Jonckheere-Terpstra test of trend for all single hypotheses</h3>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">pasi.ctp.J1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/AnalyseCTP.html">AnalyseCTP</a></span>(<span class="no">dose.steps4</span>,<span class="no">pasi.ch</span>~<span class="no">dose</span>,<span class="no">pasi</span>, <span class="kw">test</span><span class="kw">=</span><span class="st">"jonckheere"</span>,<span class="kw">alternative</span><span class="kw">=</span><span class="st">"increasing"</span>)
-<span class="no">pasi.ctp.J2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/AnalyseCTP.html">AnalyseCTP</a></span>(<span class="no">dose.steps4</span>,<span class="no">pasi.ch</span>~<span class="no">dose</span>,<span class="no">pasi</span>, <span class="kw">test</span><span class="kw">=</span><span class="st">"jonckheere"</span>,<span class="kw">alternative</span><span class="kw">=</span><span class="st">"two.sided"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">pasi.ctp.J1</span>)
 <span class="co">## </span>
 <span class="co">## Summary of Closed Testing Procedure</span>
@@ -340,62 +275,17 @@
 <span class="co">## </span>
 <span class="co">## Model : pasi.ch ~ dose , test : jonckheere </span>
 <span class="co">## </span>
-<span class="co">## Factor levels: 1=Placebo, 2=ET.10mg, 3=ET.25mg, 4=ET.50mg </span>
-<span class="co">## </span>
-<span class="co">## Hypotheses and p-values</span>
-<span class="co">## -----------------------</span>
-<span class="co">## </span>
-<span class="co">##  Hypothesis Level raw p-value adj. p-value</span>
-<span class="co">##        [12]     1   1.179e-02    5.652e-02</span>
-<span class="co">##        [23]     1   8.284e-02    8.284e-02</span>
-<span class="co">##        [34]     1   2.141e-01    2.141e-01</span>
-<span class="co">##       [123]     2   1.563e-04    1.563e-04</span>
-<span class="co">##    [12][34]     2   5.652e-02    5.652e-02</span>
-<span class="co">##       [234]     2   1.189e-02    1.189e-02</span>
-<span class="co">##      [1234]     3   1.890e-06    1.890e-06</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">pasi.ctp.J2</span>)
-<span class="co">## </span>
-<span class="co">## Summary of Closed Testing Procedure</span>
-<span class="co">## ===================================</span>
-<span class="co">## </span>
-<span class="co">## Model : pasi.ch ~ dose , test : jonckheere </span>
+<span class="co">## Test options:  alternative : increasing    </span>
 <span class="co">## </span>
 <span class="co">## Factor levels: 1=Placebo, 2=ET.10mg, 3=ET.25mg, 4=ET.50mg </span>
 <span class="co">## </span>
-<span class="co">## Hypotheses and p-values</span>
-<span class="co">## -----------------------</span>
+<span class="co">## Elementary Hypotheses and p-values</span>
+<span class="co">## ----------------------------------</span>
 <span class="co">## </span>
-<span class="co">##  Hypothesis Level raw p-value adj. p-value</span>
-<span class="co">##        [12]     1   2.359e-02    5.652e-02</span>
-<span class="co">##        [23]     1   1.657e-01    1.657e-01</span>
-<span class="co">##        [34]     1   4.283e-01    4.283e-01</span>
-<span class="co">##       [123]     2   3.127e-04    3.127e-04</span>
-<span class="co">##    [12][34]     2   5.652e-02    5.652e-02</span>
-<span class="co">##       [234]     2   2.377e-02    2.377e-02</span>
-<span class="co">##      [1234]     3   3.781e-06    3.781e-06</span>
-<span class="no">pasi.ctp.J3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/AnalyseCTP.html">AnalyseCTP</a></span>(<span class="no">dose.steps4</span>,<span class="no">pasi.ch</span>~<span class="no">dose</span>,<span class="no">pasi</span>, <span class="kw">test</span><span class="kw">=</span><span class="st">"jonckheere"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">pasi.ctp.J3</span>)
-<span class="co">## </span>
-<span class="co">## Summary of Closed Testing Procedure</span>
-<span class="co">## ===================================</span>
-<span class="co">## </span>
-<span class="co">## Model : pasi.ch ~ dose , test : jonckheere </span>
-<span class="co">## </span>
-<span class="co">## Factor levels: 1=Placebo, 2=ET.10mg, 3=ET.25mg, 4=ET.50mg </span>
-<span class="co">## </span>
-<span class="co">## Hypotheses and p-values</span>
-<span class="co">## -----------------------</span>
-<span class="co">## </span>
-<span class="co">##  Hypothesis Level raw p-value adj. p-value</span>
-<span class="co">##        [12]     1   2.359e-02    5.652e-02</span>
-<span class="co">##        [23]     1   1.657e-01    1.657e-01</span>
-<span class="co">##        [34]     1   4.283e-01    4.283e-01</span>
-<span class="co">##       [123]     2   3.127e-04    3.127e-04</span>
-<span class="co">##    [12][34]     2   5.652e-02    5.652e-02</span>
-<span class="co">##       [234]     2   2.377e-02    2.377e-02</span>
-<span class="co">##      [1234]     3   3.781e-06    3.781e-06</span>
-<span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">pasi.ctp.J1</span>)</pre></body></html></div>
-<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
+<span class="co">##  Hypothesis raw p-value adj. p-value</span>
+<span class="co">##        [12]     0.01179      0.05652</span>
+<span class="co">##        [23]     0.08284      0.08284</span>
+<span class="co">##        [34]     0.21415      0.21415</span></pre></body></html></div>
 </div>
 </div>
 <div id="proportions" class="section level2">
@@ -405,7 +295,7 @@
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">two.to.first</span><span class="kw">&lt;-</span> <span class="fu"><a href="../reference/IntersectHypotheses.html">IntersectHypotheses</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fl">1</span>:<span class="fl">2</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">3</span>)))
 
 <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">two.to.first</span>,<span class="kw">Type</span><span class="kw">=</span><span class="st">"s"</span>,<span class="kw">main</span><span class="kw">=</span><span class="st">"two vs control"</span>,<span class="kw">arrow</span><span class="kw">=</span><span class="fl">TRUE</span>)</pre></body></html></div>
-<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-6-1.png" width="100%"></p>
+<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r">
 <span class="co">#The two elementary hypotheses  are tested after comparing the three proportions globally.</span>
 
@@ -420,15 +310,14 @@
 <span class="co">## </span>
 <span class="co">## Factor levels: 1=control, 2=low, 3=high </span>
 <span class="co">## </span>
-<span class="co">## Hypotheses and p-values</span>
-<span class="co">## -----------------------</span>
+<span class="co">## Elementary Hypotheses and p-values</span>
+<span class="co">## ----------------------------------</span>
 <span class="co">## </span>
-<span class="co">##  Hypothesis Level raw p-value adj. p-value</span>
-<span class="co">##        [12]     1     0.02018      0.04459</span>
-<span class="co">##        [13]     1     0.09877      0.09877</span>
-<span class="co">##       [123]     2     0.04459      0.04459</span>
+<span class="co">##  Hypothesis raw p-value adj. p-value</span>
+<span class="co">##        [12]     0.02018      0.04459</span>
+<span class="co">##        [13]     0.09877      0.09877</span>
 <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">colorectal.ctp</span>,<span class="kw">Type</span><span class="kw">=</span><span class="st">"t"</span>)</pre></body></html></div>
-<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-6-2.png" width="100%"></p>
+<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-7-2.png" width="100%"></p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r">
 <span class="no">colorectal.chisq</span> <span class="kw">&lt;-</span><span class="fu"><a href="../reference/AnalyseCTP.html">AnalyseCTP</a></span>(<span class="no">two.to.first</span>,<span class="no">responder</span>~<span class="no">dose</span>,<span class="kw">data</span><span class="kw">=</span><span class="no">colorectal</span>, <span class="kw">test</span><span class="kw">=</span><span class="st">"chisq"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">colorectal.chisq</span>, <span class="kw">digits</span><span class="kw">=</span><span class="fl">1</span>)
@@ -440,13 +329,12 @@
 <span class="co">## </span>
 <span class="co">## Factor levels: 1=control, 2=low, 3=high </span>
 <span class="co">## </span>
-<span class="co">## Hypotheses and p-values</span>
-<span class="co">## -----------------------</span>
+<span class="co">## Elementary Hypotheses and p-values</span>
+<span class="co">## ----------------------------------</span>
 <span class="co">## </span>
-<span class="co">##  Hypothesis Level raw p-value adj. p-value</span>
-<span class="co">##        [12]     1        0.03         0.05</span>
-<span class="co">##        [13]     1        0.11         0.11</span>
-<span class="co">##       [123]     2        0.05         0.05</span></pre></body></html></div>
+<span class="co">##  Hypothesis raw p-value adj. p-value</span>
+<span class="co">##        [12]        0.03         0.05</span>
+<span class="co">##        [13]        0.11         0.11</span></pre></body></html></div>
 </div>
 <div id="survival-analysis-with-the-logrank-test" class="section level2">
 <h2 class="hasAnchor">
@@ -487,15 +375,14 @@
 <span class="co">## </span>
 <span class="co">## Factor levels: 1=11, 2=12, 3=21, 4=22 </span>
 <span class="co">## </span>
-<span class="co">## Hypotheses and p-values</span>
-<span class="co">## -----------------------</span>
+<span class="co">## Elementary Hypotheses and p-values</span>
+<span class="co">## ----------------------------------</span>
 <span class="co">## </span>
-<span class="co">##  Hypothesis Level raw p-value adj. p-value</span>
-<span class="co">##        [12]     1      0.1119       0.3171</span>
-<span class="co">##        [34]     1      0.8434       0.8434</span>
-<span class="co">##    [12][34]     2      0.3171       0.3171</span>
+<span class="co">##  Hypothesis raw p-value adj. p-value</span>
+<span class="co">##        [12]      0.1119       0.3171</span>
+<span class="co">##        [34]      0.8434       0.8434</span>
 <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">ovar.ctp</span>)</pre></body></html></div>
-<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-9-1.png" width="100%"></p>
+<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-10-1.png" width="100%"></p>
 </div>
 <div id="comparing-means-when-a-covariate-is-included" class="section level2">
 <h2 class="hasAnchor">
@@ -513,19 +400,15 @@
 <span class="co">## </span>
 <span class="co">## Factor levels: 1=PLACEBO, 2=LOW, 3=MEDIUM, 4=HIGH </span>
 <span class="co">## </span>
-<span class="co">## Hypotheses and p-values</span>
-<span class="co">## -----------------------</span>
+<span class="co">## Elementary Hypotheses and p-values</span>
+<span class="co">## ----------------------------------</span>
 <span class="co">## </span>
-<span class="co">##  Hypothesis Level raw p-value adj. p-value</span>
-<span class="co">##        [12]     1   6.033e-02    6.033e-02</span>
-<span class="co">##        [13]     1   7.086e-05    3.536e-04</span>
-<span class="co">##        [14]     1   6.917e-05    3.464e-04</span>
-<span class="co">##       [123]     2   3.536e-04    3.536e-04</span>
-<span class="co">##       [124]     2   3.464e-04    3.464e-04</span>
-<span class="co">##       [134]     2   2.407e-05    7.375e-05</span>
-<span class="co">##      [1234]     3   7.375e-05    7.375e-05</span>
+<span class="co">##  Hypothesis raw p-value adj. p-value</span>
+<span class="co">##        [12]   6.033e-02    0.0603256</span>
+<span class="co">##        [13]   7.086e-05    0.0003536</span>
+<span class="co">##        [14]   6.917e-05    0.0003464</span>
 <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">glucose.ctp</span>,<span class="kw">Type</span><span class="kw">=</span><span class="st">"s"</span>)</pre></body></html></div>
-<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-10-1.png" width="100%"></p>
+<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-11-1.png" width="100%"></p>
 </div>
 <div id="large-hypothesis-trees" class="section level2">
 <h2 class="hasAnchor">
@@ -537,9 +420,6 @@
 
 <span class="no">xxx</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/IntersectHypotheses.html">IntersectHypotheses</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fl">1</span>:<span class="fl">2</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">3</span>),<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">4</span>),<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">5</span>),<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">5</span>),<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>,<span class="fl">4</span>)))
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">xxx</span>)
-<span class="co">## New names:</span>
-<span class="co">## * hyp.no -&gt; hyp.no...2</span>
-<span class="co">## * hyp.no -&gt; hyp.no...5</span>
 <span class="co">## </span>
 <span class="co">## Hypotheses to be tested </span>
 <span class="co">## =======================</span>
@@ -642,7 +522,7 @@
 <span class="co">##      3  [134][25] -&gt; [12345]</span>
 <span class="co">##      3     [1345] -&gt; [12345]</span>
 <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">xxx</span>)</pre></body></html></div>
-<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-11-1.png" width="100%"></p>
+<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-12-1.png" width="100%"></p>
 </div>
 <div id="external-p-values" class="section level2">
 <h2 class="hasAnchor">
@@ -656,208 +536,124 @@
 <li>Use <strong>Adjust_raw</strong> to calculte the adjusted p- values. <strong>Adjust_raw</strong> delivers an object of class <strong>ctp</strong>.</li>
 <li>Use <strong>summary</strong> and <strong>Display</strong> on this object.</li>
 </ul>
-<div class="sourceCode" id="cb17"><html><body><pre class="r">    <span class="no">xxx</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/IntersectHypotheses.html">IntersectHypotheses</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fl">1</span>:<span class="fl">2</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">3</span>),<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">4</span>)))
-  <span class="no">xxx</span>$<span class="no">hypothesis</span>
-<span class="co">## [[1]]</span>
-<span class="co">## [[1]][[1]]</span>
-<span class="co">## [1] 1 2</span>
+<div class="sourceCode" id="cb17"><html><body><pre class="r">        <span class="no">Pairwise</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/IntersectHypotheses.html">IntersectHypotheses</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">2</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">3</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">4</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">3</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">4</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>,<span class="fl">4</span>)))
+        <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">Pairwise</span>)</pre></body></html></div>
+<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-13-1.png" width="100%"></p>
+<div class="sourceCode" id="cb18"><html><body><pre class="r">        <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">Pairwise</span>)
 <span class="co">## </span>
-<span class="co">## [[1]][[2]]</span>
-<span class="co">## [1] 1 3</span>
+<span class="co">## Hypotheses to be tested </span>
+<span class="co">## =======================</span>
 <span class="co">## </span>
-<span class="co">## [[1]][[3]]</span>
-<span class="co">## [1] 1 4</span>
+<span class="co">##  hyp.no level hypothesis.name</span>
+<span class="co">##       1     1            [12]</span>
+<span class="co">##       2     1            [13]</span>
+<span class="co">##       3     1            [14]</span>
+<span class="co">##       4     1            [23]</span>
+<span class="co">##       5     1            [24]</span>
+<span class="co">##       6     1            [34]</span>
+<span class="co">##       1     2           [123]</span>
+<span class="co">##       2     2           [124]</span>
+<span class="co">##       3     2        [12][34]</span>
+<span class="co">##       4     2           [134]</span>
+<span class="co">##       5     2        [13][24]</span>
+<span class="co">##       6     2        [14][23]</span>
+<span class="co">##       7     2           [234]</span>
+<span class="co">##       1     3          [1234]</span>
 <span class="co">## </span>
+<span class="co">## Connection structure of the hypotheses </span>
+<span class="co">## ======================================</span>
 <span class="co">## </span>
-<span class="co">## [[2]]</span>
-<span class="co">## [[2]][[1]]</span>
-<span class="co">## [1] 1 2 3</span>
-<span class="co">## </span>
-<span class="co">## [[2]][[2]]</span>
-<span class="co">## [1] 1 2 4</span>
-<span class="co">## </span>
-<span class="co">## [[2]][[3]]</span>
-<span class="co">## [1] 1 3 4</span>
-<span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[3]]</span>
-<span class="co">## [[3]][[1]]</span>
-<span class="co">## [1] 1 2 3 4</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="no">xxx</span>$<span class="no">hypnames</span>)
-<span class="co">##   hyp.no level hypothesis.name</span>
-<span class="co">## 1      1     1            [12]</span>
-<span class="co">## 2      2     1            [13]</span>
-<span class="co">## 3      3     1            [14]</span>
-<span class="co">## 4      1     2           [123]</span>
-<span class="co">## 5      2     2           [124]</span>
-<span class="co">## 6      3     2           [134]</span>
-<span class="co">## 7      1     3          [1234]</span>
-  <span class="no">xxx</span>$<span class="no">hypnames</span>
-<span class="co">##   hyp.no level hypothesis.name</span>
-<span class="co">## 1      1     1            [12]</span>
-<span class="co">## 2      2     1            [13]</span>
-<span class="co">## 3      3     1            [14]</span>
-<span class="co">## 4      1     2           [123]</span>
-<span class="co">## 5      2     2           [124]</span>
-<span class="co">## 6      3     2           [134]</span>
-<span class="co">## 7      1     3          [1234]</span>
-  <span class="no">p.val</span><span class="kw">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.05</span>,<span class="fl">0.04</span>,<span class="fl">0.02</span>,<span class="fl">0.08</span>,<span class="fl">0.03</span>,<span class="fl">0.03</span>,<span class="fl">0.04</span>)
+<span class="co">##  Level         Connection</span>
+<span class="co">##      1      [12] -&gt; [123]</span>
+<span class="co">##      1      [12] -&gt; [124]</span>
+<span class="co">##      1   [12] -&gt; [12][34]</span>
+<span class="co">##      1      [13] -&gt; [123]</span>
+<span class="co">##      1      [13] -&gt; [134]</span>
+<span class="co">##      1   [13] -&gt; [13][24]</span>
+<span class="co">##      1      [14] -&gt; [124]</span>
+<span class="co">##      1      [14] -&gt; [134]</span>
+<span class="co">##      1   [14] -&gt; [14][23]</span>
+<span class="co">##      1      [23] -&gt; [123]</span>
+<span class="co">##      1   [23] -&gt; [14][23]</span>
+<span class="co">##      1      [23] -&gt; [234]</span>
+<span class="co">##      1      [24] -&gt; [124]</span>
+<span class="co">##      1   [24] -&gt; [13][24]</span>
+<span class="co">##      1      [24] -&gt; [234]</span>
+<span class="co">##      1   [34] -&gt; [12][34]</span>
+<span class="co">##      1      [34] -&gt; [134]</span>
+<span class="co">##      1      [34] -&gt; [234]</span>
+<span class="co">##      2 [12][34] -&gt; [1234]</span>
+<span class="co">##      2    [123] -&gt; [1234]</span>
+<span class="co">##      2    [124] -&gt; [1234]</span>
+<span class="co">##      2 [13][24] -&gt; [1234]</span>
+<span class="co">##      2    [134] -&gt; [1234]</span>
+<span class="co">##      2 [14][23] -&gt; [1234]</span>
+<span class="co">##      2    [234] -&gt; [1234]</span>
 
-  <span class="fu"><a href="../reference/Adjust_raw.html">Adjust_raw</a></span>(<span class="no">xxx</span>, <span class="no">p.val</span>)
-<span class="co">## $CTPparms</span>
-<span class="co">## $CTPparms$hyplist</span>
-<span class="co">## $CTPparms$hyplist[[1]]</span>
-<span class="co">## $CTPparms$hyplist[[1]][[1]]</span>
-<span class="co">## [1] 1 2</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$hyplist[[1]][[2]]</span>
-<span class="co">## [1] 1 3</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$hyplist[[1]][[3]]</span>
-<span class="co">## [1] 1 4</span>
-<span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$hyplist[[2]]</span>
-<span class="co">## $CTPparms$hyplist[[2]][[1]]</span>
-<span class="co">## [1] 1 2 3</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$hyplist[[2]][[2]]</span>
-<span class="co">## [1] 1 2 4</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$hyplist[[2]][[3]]</span>
-<span class="co">## [1] 1 3 4</span>
-<span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$hyplist[[3]]</span>
-<span class="co">## $CTPparms$hyplist[[3]][[1]]</span>
-<span class="co">## [1] 1 2 3 4</span>
-<span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$hypnames</span>
-<span class="co">##   hyp.no level hypothesis.name pvalue</span>
-<span class="co">## 1      1     1            [12]   0.05</span>
-<span class="co">## 2      2     1            [13]   0.04</span>
-<span class="co">## 3      3     1            [14]   0.02</span>
-<span class="co">## 4      1     2           [123]   0.08</span>
-<span class="co">## 5      2     2           [124]   0.03</span>
-<span class="co">## 6      3     2           [134]   0.03</span>
-<span class="co">## 7      1     3          [1234]   0.04</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$connections</span>
-<span class="co">## $CTPparms$connections[[1]]</span>
-<span class="co">##   hypold hypnew levold levnew</span>
-<span class="co">## 1      1      1      1      2</span>
-<span class="co">## 2      2      1      1      2</span>
-<span class="co">## 3      1      2      1      2</span>
-<span class="co">## 4      3      2      1      2</span>
-<span class="co">## 5      2      3      1      2</span>
-<span class="co">## 6      3      3      1      2</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$connections[[2]]</span>
-<span class="co">##   hypold hypnew levold levnew</span>
-<span class="co">## 1      1      1      2      3</span>
-<span class="co">## 2      2      1      2      3</span>
-<span class="co">## 3      3      1      2      3</span>
-<span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$model</span>
-<span class="co">## NULL</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$lm.obj</span>
-<span class="co">## NULL</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$data</span>
-<span class="co">## NULL</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$test</span>
-<span class="co">## [1] "ctp."</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$fac</span>
-<span class="co">## NULL</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$facname</span>
-<span class="co">## NULL</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$level</span>
-<span class="co">## NULL</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$nlevel</span>
-<span class="co">## [1] 0</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$resp</span>
-<span class="co">## NULL</span>
-<span class="co">## </span>
-<span class="co">## $CTPparms$respname</span>
-<span class="co">## [1] ""</span>
-<span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## $pvalues</span>
-<span class="co">##   hyp.no level hypothesis.name pvalue pvalue.adj</span>
-<span class="co">## 1      1     1            [12]   0.05       0.08</span>
-<span class="co">## 2      2     1            [13]   0.04       0.08</span>
-<span class="co">## 3      3     1            [14]   0.02       0.04</span>
-<span class="co">## 4      1     2           [123]   0.08       0.08</span>
-<span class="co">## 5      2     2           [124]   0.03       0.04</span>
-<span class="co">## 6      3     2           [134]   0.03       0.04</span>
-<span class="co">## 7      1     3          [1234]   0.04       0.04</span>
-<span class="co">## </span>
-<span class="co">## $info</span>
-<span class="co">## NULL</span>
-<span class="co">## </span>
-<span class="co">## attr(,"class")</span>
-<span class="co">## [1] "ctp"</span>
-    <span class="co"># the vector of p-values calculated by another software</span>
-    <span class="co"># you may supply the hypothesis names as names of the vector</span>
+        <span class="co"># the vector of p-values calculated by another software</span>
 
-  <span class="no">result</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/Adjust_raw.html">Adjust_raw</a></span>(<span class="kw">ctp.struc</span><span class="kw">=</span><span class="no">three.to.first</span>, <span class="kw">p.value</span><span class="kw">=</span><span class="no">p.val</span>)
+        <span class="no">p.val</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
+          <span class="fl">0.4374</span>,
+          <span class="fl">0.6485</span>,
+          <span class="fl">0.4103</span>,
+          <span class="fl">0.2203</span>,
+          <span class="fl">0.1302</span>,
+          <span class="fl">0.6725</span>,
+          <span class="fl">0.4704</span>,
+          <span class="fl">0.3173</span>,
+          <span class="fl">0.6762</span>,
+          <span class="fl">0.7112</span>,
+          <span class="fl">0.2866</span>,
+          <span class="fl">0.3362</span>,
+          <span class="fl">0.2871</span>,
+          <span class="fl">0.4633</span>)
 
-    <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">result</span>)
+        <span class="no">result</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/Adjust_raw.html">Adjust_raw</a></span>(<span class="no">Pairwise</span>, <span class="kw">p.value</span><span class="kw">=</span><span class="no">p.val</span>)
+
+        <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">result</span>,<span class="kw">digits</span><span class="kw">=</span><span class="fl">3</span>)
 <span class="co">## </span>
 <span class="co">## Summary of Closed Testing Procedure</span>
 <span class="co">## ===================================</span>
 <span class="co">## </span>
-<span class="co">## Hypotheses and p-values</span>
-<span class="co">## -----------------------</span>
+<span class="co">## Elementary Hypotheses and p-values</span>
+<span class="co">## ----------------------------------</span>
 <span class="co">## </span>
-<span class="co">##  Hypothesis Level raw p-value adj. p-value</span>
-<span class="co">##        [12]     1        0.05         0.08</span>
-<span class="co">##        [13]     1        0.04         0.08</span>
-<span class="co">##        [14]     1        0.02         0.04</span>
-<span class="co">##       [123]     2        0.08         0.08</span>
-<span class="co">##       [124]     2        0.03         0.04</span>
-<span class="co">##       [134]     2        0.03         0.04</span>
-<span class="co">##      [1234]     3        0.04         0.04</span>
+<span class="co">##  Hypothesis raw p-value adj. p-value</span>
+<span class="co">##        [12]       0.437        0.676</span>
+<span class="co">##        [13]       0.648        0.711</span>
+<span class="co">##        [14]       0.410        0.711</span>
+<span class="co">##        [23]       0.220        0.470</span>
+<span class="co">##        [24]       0.130        0.463</span>
+<span class="co">##        [34]       0.672        0.711</span>
 
-    <span class="co"># details may be documented</span>
+<span class="co"># details may be documented</span>
 
-    <span class="no">result</span><span class="kw">&lt;-</span><span class="fu"><a href="../reference/Adjust_raw.html">Adjust_raw</a></span>(<span class="kw">ctp.struc</span><span class="kw">=</span><span class="no">three.to.first</span>, <span class="kw">p.value</span><span class="kw">=</span><span class="no">p.val</span>
-              ,<span class="kw">dataset.name</span><span class="kw">=</span><span class="st">"mydata"</span>, <span class="kw">factor.name</span><span class="kw">=</span><span class="st">"treatment"</span>
-              ,<span class="kw">factor.levels</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>,<span class="st">"D"</span>), <span class="kw">model</span><span class="kw">=</span><span class="no">y</span>~<span class="no">treatment</span>
-              ,<span class="kw">test.name</span><span class="kw">=</span><span class="st">"F"</span>)
+        <span class="no">result</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/Adjust_raw.html">Adjust_raw</a></span>(<span class="no">Pairwise</span>, <span class="kw">p.value</span><span class="kw">=</span><span class="no">p.val</span>
+                             ,<span class="kw">dataset.name</span><span class="kw">=</span><span class="st">"my Data"</span>, <span class="kw">factor.name</span><span class="kw">=</span><span class="st">"Factor"</span>
+                             ,<span class="kw">factor.levels</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>,<span class="st">"D"</span>), <span class="kw">model</span><span class="kw">=</span><span class="no">y</span>~<span class="no">Factor</span>
+                             ,<span class="kw">test.name</span><span class="kw">=</span><span class="st">"my Test"</span>)
 
-    <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">result</span>)
+        <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">result</span>,<span class="kw">digits</span><span class="kw">=</span><span class="fl">3</span>)
 <span class="co">## </span>
 <span class="co">## Summary of Closed Testing Procedure</span>
 <span class="co">## ===================================</span>
 <span class="co">## </span>
-<span class="co">## Model : y ~ treatment , test : F </span>
+<span class="co">## Model : y ~ Factor , test : my Test </span>
 <span class="co">## </span>
 <span class="co">## Factor levels: 1=A, 2=B, 3=C, 4=D </span>
 <span class="co">## </span>
-<span class="co">## Hypotheses and p-values</span>
-<span class="co">## -----------------------</span>
+<span class="co">## Elementary Hypotheses and p-values</span>
+<span class="co">## ----------------------------------</span>
 <span class="co">## </span>
-<span class="co">##  Hypothesis Level raw p-value adj. p-value</span>
-<span class="co">##        [12]     1        0.05         0.08</span>
-<span class="co">##        [13]     1        0.04         0.08</span>
-<span class="co">##        [14]     1        0.02         0.04</span>
-<span class="co">##       [123]     2        0.08         0.08</span>
-<span class="co">##       [124]     2        0.03         0.04</span>
-<span class="co">##       [134]     2        0.03         0.04</span>
-<span class="co">##      [1234]     3        0.04         0.04</span>
-    <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">result</span>)</pre></body></html></div>
-<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-12-1.png" width="100%"></p>
+<span class="co">##  Hypothesis raw p-value adj. p-value</span>
+<span class="co">##        [12]       0.437        0.676</span>
+<span class="co">##        [13]       0.648        0.711</span>
+<span class="co">##        [14]       0.410        0.711</span>
+<span class="co">##        [23]       0.220        0.470</span>
+<span class="co">##        [24]       0.130        0.463</span>
+<span class="co">##        [34]       0.672        0.711</span>
+        <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">result</span>)</pre></body></html></div>
+<p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-13-2.png" width="100%"></p>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="hasAnchor">
@@ -874,6 +670,9 @@
 </div>
 <div id="ref-Gabriel1976">
 <p>Marcus, Ruth, Peritz, E., and Gabriel, K.R. 1976. “On Closed Testing Procedures with Special Reference to Ordered Analysis of Variance.” <em>Biometrika</em> 63: 655–60.</p>
+</div>
+<div id="ref-emmeans">
+<p>Russell, and Lenth. 2020. “Estimated Marginal Means, Aka Least-Squares Means.”</p>
 </div>
 </div>
 </div>

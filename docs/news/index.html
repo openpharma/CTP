@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Auxiliary function — getResponse • CTP</title>
+<title>Changelog • CTP</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,7 @@
 
 
 
-<meta property="og:title" content="Auxiliary function — getResponse" />
-<meta property="og:description" content="Getting the response vector out of an object of class 'formula'" />
+<meta property="og:title" content="Changelog" />
 
 
 
@@ -59,7 +58,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -121,60 +120,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Auxiliary function</h1>
-    
-    <div class="hidden name"><code>getResponse.Rd</code></div>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      
     </div>
 
-    <div class="ref-description">
-    <p>Getting the response vector out of an object of class 'formula'</p>
-    </div>
-
-    <pre class="usage"><span class='fu'>getResponse</span>(<span class='no'>formula</span>, <span class='no'>data</span>)</pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>formula</th>
-      <td><p>Model formula</p></td>
-    </tr>
-    <tr>
-      <th>data</th>
-      <td><p>Dataframe</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Vector of response</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pasi</span>)
-
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pasi</span>)
-<span class='fu'>getResponse</span>(<span class='no'>pasi.ch</span> ~ <span class='no'>dose</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>pasi</span>)</div><div class='output co'>#&gt;  [1]  73.6  94.4  88.8  84.3  94.0 100.0 100.0 100.0  28.4 100.0  92.6 100.0
-#&gt; [13]  65.2  95.1  98.0  97.9  71.0  73.6 100.0  61.1   0.7  58.2  76.6  75.8
-#&gt; [25]  96.6 100.0  94.4  31.7  90.5 100.0  96.6  93.6  90.4  88.1  94.7  64.3
-#&gt; [37]  98.0  98.3  21.4  51.4  47.7  96.0 -16.7  93.3  11.1  69.3  98.8   0.0
-#&gt; [49]  71.6  28.8  97.1  91.0  84.2  45.9  69.8   3.7  34.0 -42.5   0.0  70.4
-#&gt; [61]   0.0  82.3  65.7  31.8  91.1   0.0  43.2 -39.4  98.6  -3.7  16.4  -4.3</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>survival</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ovarian</span>)
-<span class='no'>ovarian</span>$<span class='no'>subgroups</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='fl'>10</span>*<span class='no'>ovarian</span>$<span class='no'>ecog.ps</span>+<span class='no'>ovarian</span>$<span class='no'>rx</span>)
-
-<span class='no'>surv</span> <span class='kw'>&lt;-</span> <span class='fu'>getResponse</span>(<span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span>(<span class='no'>futime</span>,<span class='no'>fustat</span>)~<span class='no'>rx</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>ovarian</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>surv</span>)</div><div class='output co'>#&gt;  [1]   59   115   156   421+  431   448+  464   475   477+  563   638   744+
-#&gt; [13]  769+  770+  803+  855+ 1040+ 1106+ 1129+ 1206+ 1227+  268   329   353 
-#&gt; [25]  365   377+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>surv</span>)</div><div class='output co'>#&gt; [1] "Surv"</div><div class='input'>
-</div></pre>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
 
 

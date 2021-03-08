@@ -12,8 +12,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Closed Testing Procedure (CTP)">
-<meta property="og:description" content="This is a package for constructing hypothesis trees based on the closure principle and analysing
-  Closed Testing Procedures (CTP) using adjusted p-values. For reference, see
+<meta property="og:description" content="This is a package for constructing hypothesis trees for treatment comparisons based 
+  on the closure principle and analysing the corresponding Closed Testing Procedures (CTP)
+  using adjusted p-values. For reference, see
   Marcus, R., Peritz, E, and Gabriel, K.R. (1976) &lt;doi:10.2307/2335748&gt; and
   Bauer, P (1991) &lt;doi:10.1002/sim.4780100609&gt;.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -34,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">CTP</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0.9000</span>
       </span>
     </div>
 
@@ -57,12 +58,15 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/Flowchart.html">Flowchart how to use CTP</a>
-    </li>
-    <li>
       <a href="articles/closed_testing_procedure.html">Closed Testing Procedure</a>
     </li>
+    <li>
+      <a href="articles/Flowchart.html">Flowchart how to use CTP</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
@@ -81,7 +85,7 @@
 <div id="closed-testing-procedures" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#closed-testing-procedures" class="anchor"></a>Closed Testing Procedures</h1></div>
-<p>This R package provides functions for creating the closure set of multiple hypotheses and performing closed testing procedures.</p>
+<p>This R package provides functions for creating the closure set of multiple hypotheses and performing closed testing procedures with special reference to treatment comparisons.</p>
 </div>
 <div id="acknowledgement" class="section level1">
 <h1 class="hasAnchor">
@@ -100,7 +104,14 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
+    <div class="links">
+<h2>Links</h2>
+<ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=CTP">https://​cloud.r-project.org/​package=CTP</a>
+</li>
+</ul>
+</div>
+<div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;=2)</li>

@@ -73,7 +73,7 @@ The function returns an object of oldClass &quot;ctp&quot;; summary() and Displa
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CTP</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0.9000</span>
       </span>
     </div>
 
@@ -96,12 +96,15 @@ The function returns an object of oldClass &quot;ctp&quot;; summary() and Displa
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Flowchart.html">Flowchart how to use CTP</a>
-    </li>
-    <li>
       <a href="../articles/closed_testing_procedure.html">Closed Testing Procedure</a>
     </li>
+    <li>
+      <a href="../articles/Flowchart.html">Flowchart how to use CTP</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -129,7 +132,7 @@ The function returns an object of oldClass &quot;ctp&quot;; summary() and Displa
 The function returns an object of <code>oldClass "ctp"; summary()</code> and <code><a href='Generic_functions.html'>Display()</a></code> can be applied.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>AnalyseCTP</span>(<span class='no'>ctp.struc</span>, <span class='no'>model</span>, <span class='no'>dataset</span>, <span class='kw'>factor.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>test.name</span> <span class='kw'>=</span> <span class='st'>"F"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>AnalyseCTP</span>(<span class='no'>ctp.struc</span>, <span class='no'>model</span>, <span class='no'>data</span>, <span class='kw'>factor.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>test.name</span> <span class='kw'>=</span> <span class='st'>"F"</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,7 +148,7 @@ In the case
 of a Logrank test the response must be imputed as <code>Surv(time,status)</code>.</p></td>
     </tr>
     <tr>
-      <th>dataset</th>
+      <th>data</th>
       <td><p>Dataframe, missing values in the response or treatment variable are not allowed!</p></td>
     </tr>
     <tr>
@@ -156,12 +159,14 @@ By default the first variable of the right-hand side of the model formula is use
     <tr>
       <th>test.name</th>
       <td><p>One of the following strings</p><ul>
-<li><p><code>"F"</code> - F-Test (ANOVA, default)</p></li>
+<li><p><code>"F"</code> - F-Test (ANOVA from linear model, default)</p></li>
+<li><p><code>"glm"</code> - generalised linear model</p></li>
 <li><p><code>"kruskal"</code> -Kruskal-Wallis-Test</p></li>
 <li><p><code>"chisq"</code> - Chi square test</p></li>
 <li><p><code>"prob"</code> - Fisher's exact test for total number of observations &lt;200 else Chi square test</p></li>
 <li><p><code>"lgrank"</code> - Logrank-test</p></li>
 <li><p><code>"jonckheere"</code> - Jonckheere-Terpstra test of ordered alternatives</p></li>
+<li><p><code>"glm"</code> - generalised linear model, from function <code>glm</code>.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -192,8 +197,7 @@ By default the first variable of the right-hand side of the model formula is use
 	<code><a href='Adjust_raw.html'>Adjust_raw</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-        <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pasi</span>)
+    <pre class="examples"><div class='input'>        <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pasi</span>)
         <span class='no'>three.to.first</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='IntersectHypotheses.html'>IntersectHypotheses</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>3</span>),<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>)))
         <span class='fu'><a href='Generic_functions.html'>Display</a></span>(<span class='no'>three.to.first</span>)</div><div class='img'><img src='AnalyseCTP-1.png' alt='' width='700' height='433' /></div><div class='input'>        <span class='no'>pasi.ctp.F1</span> <span class='kw'>&lt;-</span> <span class='fu'>AnalyseCTP</span>(<span class='no'>three.to.first</span>,<span class='no'>pasi.ch</span>~<span class='no'>dose</span>,<span class='no'>pasi</span>)
         <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>pasi.ctp.F1</span>)</div><div class='output co'>#&gt; 
@@ -204,17 +208,13 @@ By default the first variable of the right-hand side of the model formula is use
 #&gt; 
 #&gt; Factor levels: 1=Placebo, 2=ET.10mg, 3=ET.25mg, 4=ET.50mg 
 #&gt; 
-#&gt; Hypotheses and p-values
-#&gt; -----------------------
+#&gt; Elementary Hypotheses and p-values
+#&gt; ----------------------------------
 #&gt; 
-#&gt;  Hypothesis Level raw p-value adj. p-value
-#&gt;        [12]     1   4.748e-03    4.748e-03
-#&gt;        [13]     1   2.737e-05    1.063e-04
-#&gt;        [14]     1   1.826e-06    9.797e-06
-#&gt;       [123]     2   1.063e-04    1.063e-04
-#&gt;       [124]     2   9.797e-06    9.797e-06
-#&gt;       [134]     2   1.736e-06    6.542e-06
-#&gt;      [1234]     3   6.542e-06    6.542e-06</div><div class='input'>        <span class='fu'><a href='Generic_functions.html'>Display</a></span>(<span class='no'>pasi.ctp.F1</span>)</div><div class='img'><img src='AnalyseCTP-2.png' alt='' width='700' height='433' /></div><div class='input'>	
+#&gt;  Hypothesis raw p-value adj. p-value
+#&gt;        [12]   4.748e-03    4.748e-03
+#&gt;        [13]   2.737e-05    1.063e-04
+#&gt;        [14]   1.826e-06    9.797e-06</div><div class='input'>        <span class='fu'><a href='Generic_functions.html'>Display</a></span>(<span class='no'>pasi.ctp.F1</span>)</div><div class='img'><img src='AnalyseCTP-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

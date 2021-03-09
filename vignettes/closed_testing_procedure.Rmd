@@ -193,7 +193,7 @@ For the same hypothesis structure, other tests can also be used:
 
 ### Generalized Linear Models
 
-As an example, a positive response is defined as a change from baseline PASI score greater than 50. The new variable `Resp` has then the value 1 if `pasi.ch > 50` or 0 otherwise. The correspondinn model is chosen to be  generalized linear model with logit-link, as implemented in `glm`.  
+As an example, a positive response is defined as a change from baseline PASI score greater than 50. The new variable `Resp` has then the value 1 if *pasi.ch > 50* or 0 otherwise. The corresponding model is chosen to be a generalized linear model with logit-link, as implemented in `glm`.  
 
 ```{r}
 pasi$Resp <- ifelse(pasi$pasi.ch > 50,1,0)
@@ -299,7 +299,7 @@ It is possible to use:
 * `IntersectHypotheses` to create the closure set and `Display` to plot the corresponding hypothesis tree.
 * Calculate the p-values for the local hypotheses with other functions or software.
 * Import these p-values.
-* Use `Adjust_raw` to calculte the adjusted p- values for the elementary hypotheses. `Adjust_raw` delivers an object of class `ctp`.
+* Use `Adjust_raw` to calculte the adjusted p-values for the elementary hypotheses. `Adjust_raw` delivers an object of class `ctp`.
 * Use `summary` and `Display` on this object.
 
 ```{r}

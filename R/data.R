@@ -1,7 +1,7 @@
-#' Data from a Psoriasis Study
+#' Data from a Psoriasis study
 #'
 #' The dataframe \code{pasi} comprises the changes in PASI-score (Psoirasis Area and Severity Index)
-#' from Baseline within two months of 72 patients treated with different
+#' from Baseline within two months in 72 patients treated with different
 #' doses of Etretin or Placebo in a double blind study.
 #' 
 #' @format A data frame with 72 observations and 3 variables:
@@ -14,7 +14,7 @@
 #' @usage data(pasi)     
 "pasi"
 
-#' Data from a Study in Diabetes II patients
+#' Data from a study in Diabetes II patients
 #'
 #' The dataframe \code{glucose} comprises the baseline values of fasting plasma glucose (mmol/L)
 #' and their changes from baseline to the end of the study. 

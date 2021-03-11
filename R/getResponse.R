@@ -8,7 +8,6 @@
 #' @param data Dataframe 
 #'
 #' @return Vector of response 
-#' @export
 #' 
 #' @examples 
 #' 

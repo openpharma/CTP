@@ -38,8 +38,8 @@
 #' @return
 #'  An object of old class(\code{ctp}), consisting of a list with:
 #'   \itemize{
-#'    \item{CTPparms} List with objects describing the CTP setup.
-#'    \item{pvalues} Dataframe with all tested hypotheses, raw and adjusted p-values.
+#'    \item{\code{CTPparms}}: List with objects describing the CTP setup.
+#'    \item{\code{pvalues}}: Dataframe with all tested hypotheses, raw and adjusted p-values.
 #'	  }
 #'
 #'	@note

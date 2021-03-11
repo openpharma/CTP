@@ -46,7 +46,7 @@ references:
   - family: Bretz
     given: Frank
   - family: Hothorn, T.
-  - family: Westfall,P.
+  - family: Westfall, P.
   publisher: CRC Press
   page: 261-263
   type: book
@@ -86,7 +86,7 @@ knitr::opts_chunk$set(collapse = TRUE, out.width="100%"
 
 # The Closure Principle
 
-The closure principle is a way to protect the type-I error from muliple testing. Here, we follow the the description in  [@Bretz2011].
+The closure principle is a way to protect the type-I error from multiple testing. Here, we follow the the description in  [@Bretz2011].
    It consists of four steps:
    
 1. Definition of a set ${H} = \{H_1,\ldots, H_n\}$ of elementary hypotheses.
@@ -94,7 +94,7 @@ The closure principle is a way to protect the type-I error from muliple testing.
 2. Construction of the closure set ("Hypothesis Tree").
 
 $$\overline{H} = \left \{ H_I =\bigcap_{i \in I}H_i :  \quad I \subseteq \{1,\ldots,n\} \right \} $$
-(all intersection hypotheses $H_I$).
+$$(\text{all intersection hypotheses} H_I ).$$
 
 3. Construction of a local level-$\alpha$ test for each $H_I \in \overline{H}$.
 
@@ -103,44 +103,44 @@ $$\overline{H} = \left \{ H_I =\bigcap_{i \in I}H_i :  \quad I \subseteq \{1,\ld
 
 ## Adjusted p-values
 
-As the null hypothesis $H_i$ is rejected only if the null hypothteses $H_I \in \overline{H}$ with $i \in I$ are rejected (see point 4. above), the adjusted p-value $p_{adj;i}$ for $H_i$ is defined as:
+As the null hypothesis $H_i$ is rejected only if the null hypotheses $H_I \in \overline{H}$ with $i \in I$ are rejected (see point 4. above), the adjusted p-value $p_{adj;i}$ for $H_i$ is defined as:
 
 1. Denote with $p_I$ the p-value for a given intersection hypothesis $H_I, \quad I \subseteq \{1, \ldots,n\}$.
 2. Then, $p_{adj;i}=\max_\limits{I:i\in I} p_I,\quad i=1,\ldots , n$. 
 
 # Implementation
 
-The package was designed with special reference to treatment comparisons in ANOVA-like situations.
+The package was designed in partcular for treatment comparisons in ANOVA-like situations.
 
 ## Closure set
 
 The hypothesis tree of the closed testing procedure is created using the function `IntersectHypotheses`.
 
-## Local tests CTP for a given "hypothesis tree"
+## Local tests for a given "hypothesis tree"
 		  
-In case of single hypotheses (ie. if the hypothesis can be described by a single integer vector eg. **(1,3,5)** the test (F-Test, Kruskal-Wallis-test, probability test, logrank test, ....) is applied directly.
+In the case of single hypotheses (i.e. if the hypothesis can be described by a single integer vector e.g. **(1,3,5)** the test (F-Test, Kruskal-Wallis-test, probability test, logrank test, ....) is applied directly.
   
 For combined hypotheses (i.e. for hypotheses described by several non-overlapping integer vectors eg. **(1,2), (3,4)**, The procedure differs for (generalised) linear hypotheses and other tests.  
   
-In case of the generalised linear hypotheses, the contrast matrices for the single hypotheses included are combined and these contrasts are tested simultaneously. Therefore, funtions from the package `emmeans`[@emmeans] are used. For all other tests, first the p-values $p_1, p_2, \ldots ,p_m$ for the single hypotheses are calculated, and than these are combined by Fisher's combination rule:
+In the case of generalised linear hypotheses, the contrast matrices for the single hypotheses included are combined and these contrasts are tested simultaneously. Henceforth, functions from the package `emmeans`[@emmeans] are used, as for all othe linear and generalised linear hypotheses. For all other tests, first the p-values $p_1, p_2, \ldots ,p_m$ for the single hypotheses are calculated, and then these are combined by Fisher's combination rule:
 
-If all m hypotheses are assumed to be independent, the test statistics $X$ follows under $H_0$ a $\chi^2$-distribution with 2m degrees of freedom:
+If all $m$ hypotheses are assumed to be independent, the test statistics $X$ follows under $H_0$ a $\chi^2$-distribution with $2m$ degrees of freedom:
 $$ X=-2\sum_{i=1}^{m}\ln(p_i) \sim \chi_{2m}^2$$
 from which a p-value for the global hypothesis can be easily obtained.
 
-In case of trend tests, the same type of test is applied for all intermediate single tests. 
+In the case of trend tests, the same type of test is applied for all intermediate single tests. 
 
 ## Adjusted p-values
   
-Finally the p-values are adjusted by calculating the maximum of the p-values of all tests used at a certain stage of the CTP to decide on the hypothesis in question.
+Finally the p-values for the elementary *hypotheses* are adjusted by calculating the maximum of the p-values from the hypotheses in the *testing set*  of the respective hypothesis.
 
-The function `AnalyseCTP` calculates all local and adjusted p-value for all hypotheses in the closure set (hypothesis tree). 
+The function `AnalyseCTP` calculates all local p-values and the adjusted p-values for all *elementary* hypotheses.
 
-With the function `Adjust_raw`, it is also possible to use p-values that have been calculated by other functions or software for the calculation  of the adjusted p-values.
+With the function `Adjust_raw`, it is also possible to use p-values that have been calculated by other functions or software to calculate the adjusted p-values.
 
 ## Testing set for a specific elementary hypothesis
 
-The testing set for a specific elementary hyothesis can be shown by the function `TestingSet`.
+The testing set for a specific elementary hyothesis can be printed by the function `TestingSet`.
 
 ```{r}
 library(CTP)
@@ -152,12 +152,12 @@ library(CTP)
 
 ## Comparing means
 
-The dataframe **pasi** comprises the changes in PASI-score (Psoirasis Area and Severity Index) from baseline
-within two month of 72 patients treated with three different doses of  Etretin or Placebo in a double blind study. 
+The dataframe `pasi` comprises the changes in PASI-score (Psoriasis Area and Severity Index) from baseline
+within two month in 72 patients treated with three different doses of  Etretin or Placebo in a double blind study. 
  
-Testing the elementary hypotheses 1:2, 1:3, 1:4 simultaneously using the F-Test
-i.e. testing $H_1: \mu_1=\mu_2$, $H_2: \mu_1=\mu_3$ and $H_3: \mu_1=\mu_4$ simultaneously. 
-The groups with levels 2,3,4 are compared to the control (Placebo) group (level 1). In this specific example, the adjusted and unadjusted p-values are the same. All doses show a significant effect compared to Placebo
+The elementary hypotheses 1:2, 1:3, 1:4 are tested simultaneously using the F-Test
+i.e. $H_1: \mu_1=\mu_2$, $H_2: \mu_1=\mu_3$ and $H_3: \mu_1=\mu_4$ simultaneously. 
+The groups with levels 2,3 and 4 are compared to the control (Placebo) group (level 1). In this specific example, the adjusted and unadjusted p-values are the same. All doses show a significant effect compared to Placebo.
 
 ```{r }
 library(CTP)
@@ -174,7 +174,7 @@ Display(pasi.ctp.F1)
 
 ## Another hypothesis structure
 
-Testing the elementary hypotheses 1:2, 2:3, 3:4 simultaneously using the F-Test, i.e. testing $H_1: \mu_1=\mu_2$, $H_2: \mu_2=\mu_3$ and $H_3: \mu_3=\mu_4$ simultaneously. This provides quite different results (compared to pasi.ctp.F1): No further improvement for higher doses.
+Testing the elementary hypotheses 1:2, 2:3, 3:4 simultaneously using the F-Test, i.e. testing $H_1: \mu_1=\mu_2$, $H_2: \mu_2=\mu_3$ and $H_3: \mu_3=\mu_4$ simultaneously. This provides quite different results (compared to `pasi.ctp.F1`): No further improvement for higher doses.
 
 ```{r}
 dose.steps4 <- IntersectHypotheses(list(1:2,2:3,3:4))
@@ -193,7 +193,7 @@ For the same hypothesis structure, other tests can also be used:
 
 ### Generalized Linear Models
 
-As an example, a positive response is defined as a change from baseline PASI score greater than 50. The new variable `Resp` has then the value 1 if *pasi.ch > 50* or 0 otherwise. The corresponding model is chosen to be a generalized linear model with logit-link, as implemented in `glm`.  
+As an example, a positive response is defined as a change from baseline PASI score greater than 50. The new variable `Resp` has then the value 1 if *pasi.ch > 50* or 0 otherwise. The corresponding model is chosen to be a generalised linear model with logit-link, as implemented in `glm`.  
 
 ```{r}
 pasi$Resp <- ifelse(pasi$pasi.ch > 50,1,0)
@@ -267,7 +267,7 @@ Display(ovar.ctp)
 
 ## Comparing means when a covariate is included
 
-In a study with diabetes type II patients (dataset `glucose`), three doses of a drug are compared to a placebo. The primary variable is the change of fasting plasma glucose from baseline. Fasting plasma glucose at baseline is included into the model as covariate (only implmented for linear models).
+In a study with diabetes type II patients (dataset `glucose`), three doses of a drug are compared to a placebo. The primary variable is the change of fasting plasma glucose from baseline. Fasting plasma glucose at baseline is included into the model as covariate (only implemented for linear and generalised linear models).
 
 ```{r}		
 data(glucose)
@@ -294,9 +294,9 @@ Display(xxx)
 
 ## "External" p-values
 
-It is possible to use:
+It is possible to:
 
-* `IntersectHypotheses` to create the closure set and `Display` to plot the corresponding hypothesis tree.
+* Use `IntersectHypotheses` to create the closure set and `Display` to plot the corresponding hypothesis tree.
 * Calculate the p-values for the local hypotheses with other functions or software.
 * Import these p-values.
 * Use `Adjust_raw` to calculte the adjusted p-values for the elementary hypotheses. `Adjust_raw` delivers an object of class `ctp`.
@@ -308,6 +308,7 @@ It is possible to use:
 		summary(Pairwise)
 		
 		# the vector of p-values calculated by another software
+		# (Exampe from Prof. John M. Lachin, The Biostatistics Center Rockville MD)
 		
 		p.val <- c(
 		  0.4374,

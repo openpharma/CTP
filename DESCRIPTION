@@ -9,7 +9,7 @@ Description: This is a package for constructing hypothesis trees for treatment c
 Version: 2.0.0.9000
 Authors@R: c(
   person("Paul", "Jordan", email = "paul.jordan@roche.com", role = c("aut", "cre")),
-  person("Herpers", "Matthias", role = "aut")
+  person("Matthias", "Herpers",  role = "aut")
   )
 Depends: clinfun, diagram, stats, emmeans
 Imports: dplyr, magrittr, MASS, survival, shape, Gmisc, grid

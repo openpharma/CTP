@@ -1,6 +1,7 @@
 #'	Adjusting raw p-values of a CTP
 #'
-#'	Function that adjusts the raw p-values of a closed testing procedure. The raw p-values are adjusted according to the closure principle.
+#'	Function that adjusts the raw p-values of the elementary hypotheses of a closed testing procedure.
+#'	The raw p-values are adjusted according to the closure principle.
 #'	The adjusted p-value is calculated as the maximum of the raw p-value from the current hypothesis in question and the raw p-values from
 #'	all subsequent hypotheses that contain the current hypothesis.
 #'

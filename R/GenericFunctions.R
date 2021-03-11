@@ -1,4 +1,4 @@
-#'	Summarizing and plotting the results of hypothesis trees and closed testing procedures
+#'	Summarising and plotting the results of hypothesis trees and closed testing procedures
 #'
 #'  The functions \code{summary.ctp.str} and \code{Display.ctp.str} summarise and plot the hypothesis tree of a closed testing procedure,
 #'	whereas the functions \code{summary.ctp} and \code{Display.ctp} summarise and plot the results of a closed testing procedure.

@@ -338,7 +338,6 @@ It is possible to:
 		                     ,test.name="my Test")
 		
 		summary(result,digits=3)
-		Display(result) 
 ```
 
 ---

@@ -2,11 +2,11 @@
 
 ## Bug fixes
 
-* In some cases of hypothesis structures, the testing set of some elementary was not complete and some adjusted p-values were not correct. However, the hypothesis trees as constructed b the function `IntersectHypotheses`were correct. This bug is fixed now.
+* In some cases of hypothesis structures, the testing set of some elementary was not complete and some adjusted p-values were not correct. However, the hypothesis trees as constructed by the function `IntersectHypotheses`were correct. This bug is fixed now.
 
 ## Major changes
 
-* In `AnalyseCTP()`, the tests for linear and generalized linear models are now calculated by means of the functions `test()` and `contrast()` from the package `emmeans`.
+* In `AnalyseCTP()`, the tests for linear and generalised linear models are now calculated by means of the functions `test()` and `contrast()` from the package `emmeans`.
 
 * The new exported function `TestingSet()` provides the testing set for a specific elementary hypothesis.
 

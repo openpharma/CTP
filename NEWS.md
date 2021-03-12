@@ -14,7 +14,7 @@
 
 * Adjusted p-values are only calculated and displayed for the *elementary* hypotheses. 
 
-* In `summary(ctp.struct)`, a meesage from `dplyr` is eliminated.
+* In `summary(ctp.struct)`, a message from `dplyr` is eliminated.
 
 * In the vignette **Closed Testing Procedure**, new examples are given.
 

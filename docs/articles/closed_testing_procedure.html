@@ -81,7 +81,7 @@
       <h1 data-toc-skip>Closed Testing Procedure</h1>
                         <h4 class="author">Paul Jordan</h4>
             
-            <h4 class="date">2021-03-08</h4>
+            <h4 class="date">2021-03-11</h4>
       
       
       <div class="hidden name"><code>closed_testing_procedure.Rmd</code></div>
@@ -93,12 +93,12 @@
 <div id="the-closure-principle" class="section level1">
 <h1 class="hasAnchor">
 <a href="#the-closure-principle" class="anchor"></a>The Closure Principle</h1>
-<p>The closure principle is a way to protect the type-I error from muliple testing. Here, we follow the the description in <span class="citation">(Bretz, Hothorn, T., and Westfall,P. 2011)</span>. It consists of four steps:</p>
+<p>The closure principle is a way to protect the type-I error from multiple testing. Here, we follow the the description in <span class="citation">(Bretz, Hothorn, T., and Westfall, P. 2011)</span>. It consists of four steps:</p>
 <ol style="list-style-type: decimal">
 <li><p>Definition of a set <span class="math inline">\({H} = \{H_1,\ldots, H_n\}\)</span> of elementary hypotheses.</p></li>
 <li><p>Construction of the closure set (“Hypothesis Tree”).</p></li>
 </ol>
-<p><span class="math display">\[\overline{H} = \left \{ H_I =\bigcap_{i \in I}H_i :  \quad I \subseteq \{1,\ldots,n\} \right \} \]</span> (all intersection hypotheses <span class="math inline">\(H_I\)</span>).</p>
+<p><span class="math display">\[\overline{H} = \left \{ H_I =\bigcap_{i \in I}H_i :  \quad I \subseteq \{1,\ldots,n\} \right \} \]</span> <span class="math display">\[(\text{all intersection hypotheses} H_I ).\]</span></p>
 <ol start="3" style="list-style-type: decimal">
 <li><p>Construction of a local level-<span class="math inline">\(\alpha\)</span> test for each <span class="math inline">\(H_I \in \overline{H}\)</span>.</p></li>
 <li><p>Rejection of <span class="math inline">\(H_i\)</span>, if <em>all</em> null hypotheses <span class="math inline">\(H_I \in \overline{H}\)</span> with <span class="math inline">\(i \in I\)</span> are rejected at at the local level <span class="math inline">\(\alpha\)</span>.</p></li>
@@ -106,7 +106,7 @@
 <div id="adjusted-p-values" class="section level2">
 <h2 class="hasAnchor">
 <a href="#adjusted-p-values" class="anchor"></a>Adjusted p-values</h2>
-<p>As the null hypothesis <span class="math inline">\(H_i\)</span> is rejected only if the null hypothteses <span class="math inline">\(H_I \in \overline{H}\)</span> with <span class="math inline">\(i \in I\)</span> are rejected (see point 4. above), the adjusted p-value <span class="math inline">\(p_{adj;i}\)</span> for <span class="math inline">\(H_i\)</span> is defined as:</p>
+<p>As the null hypothesis <span class="math inline">\(H_i\)</span> is rejected only if the null hypotheses <span class="math inline">\(H_I \in \overline{H}\)</span> with <span class="math inline">\(i \in I\)</span> are rejected (see point 4. above), the adjusted p-value <span class="math inline">\(p_{adj;i}\)</span> for <span class="math inline">\(H_i\)</span> is defined as:</p>
 <ol style="list-style-type: decimal">
 <li>Denote with <span class="math inline">\(p_I\)</span> the p-value for a given intersection hypothesis <span class="math inline">\(H_I, \quad I \subseteq \{1, \ldots,n\}\)</span>.</li>
 <li>Then, <span class="math inline">\(p_{adj;i}=\max_\limits{I:i\in I} p_I,\quad i=1,\ldots , n\)</span>.</li>
@@ -116,32 +116,32 @@
 <div id="implementation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#implementation" class="anchor"></a>Implementation</h1>
-<p>The package was designed with special reference to treatment comparisons in ANOVA-like situations.</p>
+<p>The package was designed in partcular for treatment comparisons in ANOVA-like situations.</p>
 <div id="closure-set" class="section level2">
 <h2 class="hasAnchor">
 <a href="#closure-set" class="anchor"></a>Closure set</h2>
-<p>The hypothesis tree of the closed testing procedure is created using the function <strong>IntersectHypotheses</strong>.</p>
+<p>The hypothesis tree of the closed testing procedure is created using the function <code>IntersectHypotheses</code>.</p>
 </div>
-<div id="local-tests-ctp-for-a-given-hypothesis-tree" class="section level2">
+<div id="local-tests-for-a-given-hypothesis-tree" class="section level2">
 <h2 class="hasAnchor">
-<a href="#local-tests-ctp-for-a-given-hypothesis-tree" class="anchor"></a>Local tests CTP for a given “hypothesis tree”</h2>
-<p>In case of single hypotheses (ie. if the hypothesis can be described by a single integer vector eg. <strong>(1,3,5)</strong> the test (F-Test, Kruskal-Wallis-test, probability test, logrank test, ….) is applied directly.</p>
+<a href="#local-tests-for-a-given-hypothesis-tree" class="anchor"></a>Local tests for a given “hypothesis tree”</h2>
+<p>In the case of single hypotheses (i.e. if the hypothesis can be described by a single integer vector e.g. <strong>(1,3,5)</strong> the test (F-Test, Kruskal-Wallis-test, probability test, logrank test, ….) is applied directly.</p>
 <p>For combined hypotheses (i.e. for hypotheses described by several non-overlapping integer vectors eg. <strong>(1,2), (3,4)</strong>, The procedure differs for (generalised) linear hypotheses and other tests.</p>
-<p>In case of the generalised linear hypotheses, the contrast matrices for the single hypotheses included are combined and these contrasts are tested simultaneously. Therefore, funtions from the package <strong>emmeans</strong><span class="citation">(Russell and Lenth 2020)</span> are used. For all other tests, first the p-values <span class="math inline">\(p_1, p_2, \ldots ,p_m\)</span> for the single hypotheses are calculated, and than these are combined by Fisher’s combination rule:</p>
-<p>If all m hypotheses are assumed to be independent, the test statistics <span class="math inline">\(X\)</span> follows under <span class="math inline">\(H_0\)</span> a <span class="math inline">\(\chi^2\)</span>-distribution with 2m degrees of freedom: <span class="math display">\[ X=-2\sum_{i=1}^{m}\ln(p_i) \sim \chi_{2m}^2\]</span> from which a p-value for the global hypothesis can be easily obtained.</p>
-<p>In case of trend tests, the same type of test is applied for all intermediate single tests.</p>
+<p>In the case of generalised linear hypotheses, the contrast matrices for the single hypotheses included are combined and these contrasts are tested simultaneously. Henceforth, functions from the package <code>emmeans</code><span class="citation">(Russell and Lenth 2020)</span> are used, as for all othe linear and generalised linear hypotheses. For all other tests, first the p-values <span class="math inline">\(p_1, p_2, \ldots ,p_m\)</span> for the single hypotheses are calculated, and then these are combined by Fisher’s combination rule:</p>
+<p>If all <span class="math inline">\(m\)</span> hypotheses are assumed to be independent, the test statistics <span class="math inline">\(X\)</span> follows under <span class="math inline">\(H_0\)</span> a <span class="math inline">\(\chi^2\)</span>-distribution with <span class="math inline">\(2m\)</span> degrees of freedom: <span class="math display">\[ X=-2\sum_{i=1}^{m}\ln(p_i) \sim \chi_{2m}^2\]</span> from which a p-value for the global hypothesis can be easily obtained.</p>
+<p>In the case of trend tests, the same type of test is applied for all intermediate single tests.</p>
 </div>
 <div id="adjusted-p-values-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#adjusted-p-values-1" class="anchor"></a>Adjusted p-values</h2>
-<p>Finally the p-values are adjusted by calculating the maximum of the p-values of all tests used at a certain stage of the CTP to decide on the hypothesis in question.</p>
-<p>The function <strong>AnalyseCTP</strong> calculates all local and adjusted p-value for all hypotheses in the closure set (hypothesis tree).</p>
-<p>With the function <strong>Adjust_raw</strong>, it is also possible to use p-values that have been calculated by other functions or programs for the calculation of the adjusted p-values.</p>
+<p>Finally the p-values for the elementary <em>hypotheses</em> are adjusted by calculating the maximum of the p-values from the hypotheses in the <em>testing set</em> of the respective hypothesis.</p>
+<p>The function <code>AnalyseCTP</code> calculates all local p-values and the adjusted p-values for all <em>elementary</em> hypotheses.</p>
+<p>With the function <code>Adjust_raw</code>, it is also possible to use p-values that have been calculated by other functions or software to calculate the adjusted p-values.</p>
 </div>
 <div id="testing-set-for-a-specific-elementary-hypothesis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#testing-set-for-a-specific-elementary-hypothesis" class="anchor"></a>Testing set for a specific elementary hypothesis</h2>
-<p>The testing set for a specific elementary hyothesis can be shown by the function <strong>TestingSet</strong>.</p>
+<p>The testing set for a specific elementary hyothesis can be printed by the function <code>TestingSet</code>.</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">CTP</span>)
         <span class="no">Pairwise</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/IntersectHypotheses.html">IntersectHypotheses</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">2</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">3</span>),
                                         <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">4</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">3</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">4</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>,<span class="fl">4</span>)))
@@ -152,8 +152,8 @@
 <div id="comparing-means" class="section level2">
 <h2 class="hasAnchor">
 <a href="#comparing-means" class="anchor"></a>Comparing means</h2>
-<p>The dataframe <strong>pasi</strong> comprises the changes in PASI-score (Psoirasis Area and Severity Index) from baseline within two month of 72 patients treated with three different doses of Etretin or Placebo in a double blind study.</p>
-<p>Testing the elementary hypotheses 1:2, 1:3, 1:4 simultaneously using the F-Test i.e. testing <span class="math inline">\(H_1: \mu_1=\mu_2\)</span>, <span class="math inline">\(H_2: \mu_1=\mu_3\)</span> and <span class="math inline">\(H_3: \mu_1=\mu_4\)</span> simultaneously. The groups with levels 2,3,4 are compared to the control (Placebo) group (level 1). In this specific example, the adjusted and unadjusted p-values are the same. All doses show a significant effect compared to Placebo</p>
+<p>The dataframe <code>pasi</code> comprises the changes in PASI-score (Psoriasis Area and Severity Index) from baseline within two month in 72 patients treated with three different doses of Etretin or Placebo in a double blind study.</p>
+<p>The elementary hypotheses 1:2, 1:3, 1:4 are tested simultaneously using the F-Test i.e. <span class="math inline">\(H_1: \mu_1=\mu_2\)</span>, <span class="math inline">\(H_2: \mu_1=\mu_3\)</span> and <span class="math inline">\(H_3: \mu_1=\mu_4\)</span> simultaneously. The groups with levels 2,3 and 4 are compared to the control (Placebo) group (level 1). In this specific example, the adjusted and unadjusted p-values are the same. All doses show a significant effect compared to Placebo.</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">CTP</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">pasi</span>)
@@ -184,7 +184,7 @@
 <div id="another-hypothesis-structure" class="section level2">
 <h2 class="hasAnchor">
 <a href="#another-hypothesis-structure" class="anchor"></a>Another hypothesis structure</h2>
-<p>Testing the elementary hypotheses 1:2, 2:3, 3:4 simultaneously using the F-Test, i.e. testing <span class="math inline">\(H_1: \mu_1=\mu_2\)</span>, <span class="math inline">\(H_2: \mu_2=\mu_3\)</span> and <span class="math inline">\(H_3: \mu_3=\mu_4\)</span> simultaneously. This provides quite different results (compared to pasi.ctp.F1): No further improvement for higher doses.</p>
+<p>Testing the elementary hypotheses 1:2, 2:3, 3:4 simultaneously using the F-Test, i.e. testing <span class="math inline">\(H_1: \mu_1=\mu_2\)</span>, <span class="math inline">\(H_2: \mu_2=\mu_3\)</span> and <span class="math inline">\(H_3: \mu_3=\mu_4\)</span> simultaneously. This provides quite different results (compared to <code>pasi.ctp.F1</code>): No further improvement for higher doses.</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">dose.steps4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/IntersectHypotheses.html">IntersectHypotheses</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fl">1</span>:<span class="fl">2</span>,<span class="fl">2</span>:<span class="fl">3</span>,<span class="fl">3</span>:<span class="fl">4</span>))
 <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">dose.steps4</span>,<span class="kw">arr</span><span class="kw">=</span><span class="fl">TRUE</span>)</pre></body></html></div>
 <p><img src="closed_testing_procedure_files/figure-html/unnamed-chunk-3-1.png" width="100%"></p>
@@ -218,7 +218,7 @@
 <div id="generalized-linear-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#generalized-linear-models" class="anchor"></a>Generalized Linear Models</h3>
-<p>As an example, a positive response is defined as a change from baseline PASI score greater than 50. The new variable <code>Resp</code> has then the value 1 if <code>pasi.ch &gt; 50</code> or 0 otherwise. The correspondinn model is chosen to be generalized linear model with logit-link, as implemented in <code>glm</code>.</p>
+<p>As an example, a positive response is defined as a change from baseline PASI score greater than 50. The new variable <code>Resp</code> has then the value 1 if <em>pasi.ch &gt; 50</em> or 0 otherwise. The corresponding model is chosen to be a generalised linear model with logit-link, as implemented in <code>glm</code>.</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">pasi</span>$<span class="no">Resp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="no">pasi</span>$<span class="no">pasi.ch</span> <span class="kw">&gt;</span> <span class="fl">50</span>,<span class="fl">1</span>,<span class="fl">0</span>)
 
 <span class="no">pasi.ctp_bin</span> <span class="kw">&lt;-</span><span class="fu"><a href="../reference/AnalyseCTP.html">AnalyseCTP</a></span>(<span class="no">three.to.first</span>,<span class="no">Resp</span>~<span class="no">dose</span>,<span class="no">pasi</span>,<span class="kw">test.name</span><span class="kw">=</span><span class="st">"glm"</span>,<span class="kw">family</span><span class="kw">=</span><span class="st">"binomial"</span>)
@@ -291,7 +291,7 @@
 <div id="proportions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#proportions" class="anchor"></a>Proportions</h2>
-<p>The data set <strong>colorectal</strong> contains the response rates from a dose finding study in metastatic colorectal cancer. Two doses of the experimental drug were compared to the standard treatment. The response rates in the two dose groups are compared to the control responder rate using both, the <span class="math inline">\(\chi^2\)</span>-test and Fisher’s exact test.</p>
+<p>The data set <code>colorectal</code> contains the response rates from a dose finding study in metastatic colorectal cancer. Two doses of the experimental drug were compared to the standard treatment. The response rates in the two dose groups are compared to the control responder rate using both, the <span class="math inline">\(\chi^2\)</span>-test and Fisher’s exact test.</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">two.to.first</span><span class="kw">&lt;-</span> <span class="fu"><a href="../reference/IntersectHypotheses.html">IntersectHypotheses</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fl">1</span>:<span class="fl">2</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">3</span>)))
 
 <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">two.to.first</span>,<span class="kw">Type</span><span class="kw">=</span><span class="st">"s"</span>,<span class="kw">main</span><span class="kw">=</span><span class="st">"two vs control"</span>,<span class="kw">arrow</span><span class="kw">=</span><span class="fl">TRUE</span>)</pre></body></html></div>
@@ -339,7 +339,7 @@
 <div id="survival-analysis-with-the-logrank-test" class="section level2">
 <h2 class="hasAnchor">
 <a href="#survival-analysis-with-the-logrank-test" class="anchor"></a>Survival Analysis with the logrank test</h2>
-<p>This example uses the sample dataset <strong>ovarian</strong> from the package <strong>survival</strong>. The overall survival curves of the two treatments <em>rx</em> do not differ significantly:</p>
+<p>This example uses the sample dataset <code>ovarian</code> from the package <code>survival</code>. The overall survival curves of the two treatments <code>rx</code> do not differ significantly:</p>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">survival</span>)
        <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">ovarian</span>)
 
@@ -352,7 +352,7 @@
 <span class="co">## rx=2 13        5     6.77     0.461      1.06</span>
 <span class="co">## </span>
 <span class="co">##  Chisq= 1.1  on 1 degrees of freedom, p= 0.3</span></pre></body></html></div>
-<p>Together with the performance subgroups <em>ecog=1</em> and <em>ecog=2</em> , a factor “subgroups” defined by the combinations of the performance measure <em>ecog.ps</em> and the treatment <em>rx</em>.</p>
+<p>Together with the performance subgroups <code>ecog=1</code> and <code>ecog=2</code> , a factor “subgroups” defined by the combinations of the performance measure <code>ecog.ps</code> and the treatment <code>rx</code>.</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">ovarian</span>$<span class="no">subgroups</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="fl">10</span>*<span class="no">ovarian</span>$<span class="no">ecog.ps</span>+<span class="no">ovarian</span>$<span class="no">rx</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">ovarian</span>))
 <span class="co">##   futime fustat     age resid.ds rx ecog.ps subgroups</span>
@@ -387,7 +387,7 @@
 <div id="comparing-means-when-a-covariate-is-included" class="section level2">
 <h2 class="hasAnchor">
 <a href="#comparing-means-when-a-covariate-is-included" class="anchor"></a>Comparing means when a covariate is included</h2>
-<p>In a study with diabetes type II patients (dataset <strong>glucose</strong>), three doses of a drug are compared to a placebo. The primary variable is the change of fasting plasma glucose from baseline. Fasting plasma glucose at baseline is included into the model as covariate (only implmented for linear models).</p>
+<p>In a study with diabetes type II patients (dataset <code>glucose</code>), three doses of a drug are compared to a placebo. The primary variable is the change of fasting plasma glucose from baseline. Fasting plasma glucose at baseline is included into the model as covariate (only implemented for linear and generalised linear models).</p>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">glucose</span>)
 <span class="no">glucose.ctp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/AnalyseCTP.html">AnalyseCTP</a></span>(<span class="no">three.to.first</span>,<span class="no">GLUCOSE.CHANGE</span>~<span class="no">GLUCOSE.BLA</span>+<span class="no">DOSE</span>,
                          <span class="kw">data</span><span class="kw">=</span><span class="no">glucose</span>, <span class="kw">factor.name</span><span class="kw">=</span><span class="st">"DOSE"</span>)
@@ -527,14 +527,13 @@
 <div id="external-p-values" class="section level2">
 <h2 class="hasAnchor">
 <a href="#external-p-values" class="anchor"></a>“External” p-values</h2>
-<p>It is possible to use:</p>
+<p>It is possible to:</p>
 <ul>
-<li>
-<strong>IntersectHypotheses</strong> to create the closure set and <strong>Display</strong> to plot the corresponding hypothesis tree.</li>
+<li>Use <code>IntersectHypotheses</code> to create the closure set and <code>Display</code> to plot the corresponding hypothesis tree.</li>
 <li>Calculate the p-values for the local hypotheses with other functions or software.</li>
 <li>Import these p-values.</li>
-<li>Use <strong>Adjust_raw</strong> to calculte the adjusted p- values. <strong>Adjust_raw</strong> delivers an object of class <strong>ctp</strong>.</li>
-<li>Use <strong>summary</strong> and <strong>Display</strong> on this object.</li>
+<li>Use <code>Adjust_raw</code> to calculte the adjusted p-values for the elementary hypotheses. <code>Adjust_raw</code> delivers an object of class <code>ctp</code>.</li>
+<li>Use <code>summary</code> and <code>Display</code> on this object.</li>
 </ul>
 <div class="sourceCode" id="cb17"><html><body><pre class="r">        <span class="no">Pairwise</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/IntersectHypotheses.html">IntersectHypotheses</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">2</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">3</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">4</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">3</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">4</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>,<span class="fl">4</span>)))
         <span class="fu"><a href="../reference/Generic_functions.html">Display</a></span>(<span class="no">Pairwise</span>)</pre></body></html></div>
@@ -591,6 +590,7 @@
 <span class="co">##      2    [234] -&gt; [1234]</span>
 
         <span class="co"># the vector of p-values calculated by another software</span>
+        <span class="co"># (Exampe from Prof. John M. Lachin, The Biostatistics Center Rockville MD)</span>
 
         <span class="no">p.val</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
           <span class="fl">0.4374</span>,
@@ -663,7 +663,7 @@
 <p>Bauer, Peter. 1991. “Multiple Testing in Clinical Trials.” <em>Statistics in Medicine</em> 10 (4): 261–63.</p>
 </div>
 <div id="ref-Bretz2011">
-<p>Bretz, Frank, Hothorn, T., and Westfall,P. 2011. <em>Multiple Comparisons Using R</em>. CRC Press.</p>
+<p>Bretz, Frank, Hothorn, T., and Westfall, P. 2011. <em>Multiple Comparisons Using R</em>. CRC Press.</p>
 </div>
 <div id="ref-Dmit2010">
 <p>Dmitrienko, Alex, Tamhane, A., and Bretz, F. 2010. <em>Multiple Testing Problems in Pharmaceutical Statistics</em>. Chapman &amp; Hall.</p>
@@ -690,7 +690,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Paul Jordan, Herpers Matthias.</p>
+  <p>Developed by Paul Jordan, Matthias Herpers.</p>
 </div>
 
 <div class="pkgdown">

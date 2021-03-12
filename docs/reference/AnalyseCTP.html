@@ -166,7 +166,7 @@ By default the first variable of the right-hand side of the model formula is use
 <li><p><code>"prob"</code> - Fisher's exact test for total number of observations &lt;200 else Chi square test</p></li>
 <li><p><code>"lgrank"</code> - Logrank-test</p></li>
 <li><p><code>"jonckheere"</code> - Jonckheere-Terpstra test of ordered alternatives</p></li>
-<li><p><code>"glm"</code> - generalised linear model, from function <code>glm</code>.</p></li>
+<li><p><code>"glm"</code> - generalised linear model, using function <code>glm</code> from <code>stats</code>.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -178,8 +178,8 @@ By default the first variable of the right-hand side of the model formula is use
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of old class(<code>ctp</code>), consisting of a list with:</p><ul>
-<li><p>CTPparms List with objects describing the CTP setup.</p></li>
-<li><p>pvalues Dataframe with all tested hypotheses, raw and adjusted p-values.</p></li>
+<li><p><code>CTPparms</code>: List with objects describing the CTP setup.</p></li>
+<li><p><code>pvalues</code>: Dataframe with all tested hypotheses, raw and adjusted p-values.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -227,7 +227,7 @@ By default the first variable of the right-hand side of the model formula is use
 
       <footer>
       <div class="copyright">
-  <p>Developed by Paul Jordan, Herpers Matthias.</p>
+  <p>Developed by Paul Jordan, Matthias Herpers.</p>
 </div>
 
 <div class="pkgdown">

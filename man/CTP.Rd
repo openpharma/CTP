@@ -5,11 +5,11 @@
 \alias{CTP}
 \title{CTP, a package for closed testing procedures}
 \description{
-Library of functions to design and analyze closed testing procedures for
+Library of functions to design and analyse closed testing procedures for
 	the comparison of population parameters based on independent samples.
 }
 \details{
-Library of functions to design and analyze closed testing procedures for treatment comparisons.
+Library of functions to design and analyse closed testing procedures for treatment comparisons.
 	The comparison of the population parameters are based on independent samples. The function \code{\link{IntersectHypotheses}}
 	creates the hypothesis tree (closure set) of a closed testing procedure. All possible intersecting hypotheses derived from
 	the list of elementary hypotheses(i.e. the hypotheses to be tested) are produced. The resultant hypothesis tree
@@ -17,7 +17,7 @@ Library of functions to design and analyze closed testing procedures for treatme
 	one hypothesis (the global hypothesis) remains. In this way, for each elementary hypothesis all hypotheses implying
 	it can be found.\cr\cr
 	The analysis is performed using \code{\link{AnalyseCTP}}. First the raw p-values are computed for all hypotheses of the
-	hypothesis tree, then these are adjusted according to the closure principle i.e. the adjusted p-value is
+	hypothesis tree, then the p-values of the elementary hypotheses are adjusted according to the closure principle i.e. the adjusted p-value is
 	calculated as the maximum of the raw p-value of the hypothesis in question and of the raw p-values of all
 	hypotheses implying it.\cr\cr
 

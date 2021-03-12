@@ -31,5 +31,4 @@ ovarian$subgroups <- as.factor(10*ovarian$ecog.ps+ovarian$rx)
 surv <- getResponse(Surv(futime,fustat)~rx, data=ovarian)
 print(surv)
 class(surv)
-
 }

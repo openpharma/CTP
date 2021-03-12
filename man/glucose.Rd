@@ -3,7 +3,7 @@
 \docType{data}
 \name{glucose}
 \alias{glucose}
-\title{Data from a Study in Diabetes II patients}
+\title{Data from a study in Diabetes II patients}
 \format{
 A data frame with 89 observations and 3 variables:
 \describe{

@@ -6,7 +6,7 @@
 \alias{Display}
 \alias{Display.ctp}
 \alias{Display.ctp.str}
-\title{Summarizing and plotting the results of hypothesis trees and closed testing procedures}
+\title{Summarising and plotting the results of hypothesis trees and closed testing procedures}
 \usage{
 \method{summary}{ctp}(object, digits = 4, ...)
 

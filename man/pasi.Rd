@@ -3,7 +3,7 @@
 \docType{data}
 \name{pasi}
 \alias{pasi}
-\title{Data from a Psoriasis Study}
+\title{Data from a Psoriasis study}
 \format{
 A data frame with 72 observations and 3 variables:
 \describe{
@@ -18,7 +18,7 @@ data(pasi)
 }
 \description{
 The dataframe \code{pasi} comprises the changes in PASI-score (Psoirasis Area and Severity Index)
-from Baseline within two months of 72 patients treated with different
+from Baseline within two months in 72 patients treated with different
 doses of Etretin or Placebo in a double blind study.
 }
 \keyword{datasets}

@@ -124,6 +124,36 @@
       
     </div>
 
+    <div id="ctp-2009000" class="section level1">
+<h1 class="page-header" data-toc-text="2.0.0.9000">
+<a href="#ctp-2009000" class="anchor"></a>CTP 2.0.0.9000<small> Unreleased </small>
+</h1>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>In some cases of hypothesis structures, the testing set of some elementary was not complete and some adjusted p-values were not correct. However, the hypothesis trees as constructed b the function <code>IntersectHypotheses</code>were correct. This bug is fixed now.</li>
+</ul>
+</div>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<ul>
+<li><p>In <code><a href="../reference/AnalyseCTP.html">AnalyseCTP()</a></code>, the tests for linear and generalized linear models are now calculated by means of the functions <code>test()</code> and <code>contrast()</code> from the package <code>emmeans</code>.</p></li>
+<li><p>The new exported function <code><a href="../reference/TestingSet.html">TestingSet()</a></code> provides the testing set for a specific elementary hypothesis.</p></li>
+</ul>
+</div>
+<div id="minor-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<ul>
+<li><p>Adjusted p-values are only calculated and displayed for the <em>elementary</em> hypotheses.</p></li>
+<li><p>In <code><a href="https://rdrr.io/r/base/summary.html">summary(ctp.struct)</a></code>, a meesage from <code>dplyr</code> is eliminated.</p></li>
+<li><p>In the vignette <strong>Closed Testing Procedure</strong>, new examples are given.</p></li>
+<li><p>Updated documentation.</p></li>
+</ul>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -137,7 +167,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Paul Jordan, Herpers Matthias.</p>
+  <p>Developed by Paul Jordan, Matthias Herpers.</p>
 </div>
 
 <div class="pkgdown">

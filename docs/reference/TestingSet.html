@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -95,10 +95,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/closed_testing_procedure.html">Closed Testing Procedure</a>
+      <a href="../articles/Flowchart.html">Flowchart how to use CTP</a>
     </li>
     <li>
-      <a href="../articles/Flowchart.html">Flowchart how to use CTP</a>
+      <a href="../articles/closed_testing_procedure.html">Closed Testing Procedure</a>
     </li>
   </ul>
 </li>
@@ -130,7 +130,7 @@
     <p>Testing set for an elementary hypothesis</p>
     </div>
 
-    <pre class="usage"><span class='fu'>TestingSet</span>(<span class='no'>ctp.struc</span>, <span class='no'>Hyp</span>)</pre>
+    <pre class="usage"><span class='fu'>TestingSet</span><span class='op'>(</span><span class='va'>ctp.struc</span>, <span class='va'>Hyp</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,10 +151,11 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-        <span class='no'>Pairwise</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='IntersectHypotheses.html'>IntersectHypotheses</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>3</span>),
-                                        <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>3</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>4</span>)))
-   <span class='no'>Set24</span>    <span class='kw'>&lt;-</span> <span class='fu'>TestingSet</span>(<span class='no'>Pairwise</span>,<span class='st'>"[24]"</span>)
-   <span class='no'>Set24</span></div><div class='output co'>#&gt; [1] "[24]"     "[124]"    "[13][24]" "[234]"    "[1234]"  </div><div class='input'>   
+  <span class='va'>Pairwise</span> <span class='op'>&lt;-</span> <span class='fu'><a href='IntersectHypotheses.html'>IntersectHypotheses</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span>,
+                                  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>4</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>4</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+   <span class='va'>Set24</span>    <span class='op'>&lt;-</span> <span class='fu'>TestingSet</span><span class='op'>(</span><span class='va'>Pairwise</span>,<span class='st'>"[24]"</span><span class='op'>)</span>
+   <span class='va'>Set24</span>
+</div><div class='output co'>#&gt; [1] "[24]"     "[124]"    "[13][24]" "[234]"    "[1234]"  </div><div class='input'>   
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -171,7 +172,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

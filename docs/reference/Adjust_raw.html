@@ -83,7 +83,7 @@ all subsequent hypotheses that contain the current hypothesis." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -98,10 +98,10 @@ all subsequent hypotheses that contain the current hypothesis." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/closed_testing_procedure.html">Closed Testing Procedure</a>
+      <a href="../articles/Flowchart.html">Flowchart how to use CTP</a>
     </li>
     <li>
-      <a href="../articles/Flowchart.html">Flowchart how to use CTP</a>
+      <a href="../articles/closed_testing_procedure.html">Closed Testing Procedure</a>
     </li>
   </ul>
 </li>
@@ -136,15 +136,15 @@ The adjusted p-value is calculated as the maximum of the raw p-value from the cu
 all subsequent hypotheses that contain the current hypothesis.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Adjust_raw</span>(
-  <span class='no'>ctp.struc</span>,
-  <span class='no'>p.value</span>,
-  <span class='kw'>dataset.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>factor.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>factor.levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>test.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>Adjust_raw</span><span class='op'>(</span>
+  <span class='va'>ctp.struc</span>,
+  <span class='va'>p.value</span>,
+  dataset.name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  factor.name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  factor.levels <span class='op'>=</span> <span class='cn'>NULL</span>,
+  model <span class='op'>=</span> <span class='cn'>NULL</span>,
+  test.name <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,7 +155,7 @@ all subsequent hypotheses that contain the current hypothesis.</p>
     </tr>
     <tr>
       <th>p.value</th>
-      <td><p>Vector of raw p-values in the order of the hypotheses created by <code><a href='Generic_functions.html'>summary.ctp.str</a></code></p></td>
+      <td><p>Vector of raw p-values in the order of the hypotheses created by <code><a href='summary.ctp.html'>summary.ctp.str</a></code></p></td>
     </tr>
     <tr>
       <th>dataset.name</th>
@@ -185,13 +185,15 @@ all subsequent hypotheses that contain the current hypothesis.</p>
     <p>An object of <code>oldClass = "ctp"</code> to be used for summarizing and plotting the results.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='IntersectHypotheses.html'>IntersectHypotheses</a></code>, <code><a href='AnalyseCTP.html'>AnalyseCTP</a></code>, <code><a href='Generic_functions.html'>Display</a></code>,
-<code><a href='Generic_functions.html'>summary.ctp</a></code></p></div>
+    <div class='dont-index'><p><code><a href='IntersectHypotheses.html'>IntersectHypotheses</a></code>, <code><a href='AnalyseCTP.html'>AnalyseCTP</a></code>, <code><a href='summary.ctp.html'>Display</a></code>,
+<code><a href='summary.ctp.html'>summary.ctp</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>Pairwise</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='IntersectHypotheses.html'>IntersectHypotheses</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>3</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>3</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>4</span>)))
-<span class='fu'><a href='Generic_functions.html'>Display</a></span>(<span class='no'>Pairwise</span>)</div><div class='img'><img src='Adjust_raw-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>Pairwise</span>)</div><div class='output co'>#&gt; 
+<span class='va'>Pairwise</span> <span class='op'>&lt;-</span> <span class='fu'><a href='IntersectHypotheses.html'>IntersectHypotheses</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>4</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>4</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='summary.ctp.html'>Display</a></span><span class='op'>(</span><span class='va'>Pairwise</span><span class='op'>)</span>
+</div><div class='img'><img src='Adjust_raw-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>Pairwise</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Hypotheses to be tested 
 #&gt; =======================
 #&gt; 
@@ -242,7 +244,7 @@ all subsequent hypotheses that contain the current hypothesis.</p>
 #&gt;      2    [234] -&gt; [1234]</div><div class='input'>
 <span class='co'># the vector of p-values calculated by another software</span>
 
-  <span class='no'>p.val</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+  <span class='va'>p.val</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
             <span class='fl'>0.4374</span>,
             <span class='fl'>0.6485</span>,
             <span class='fl'>0.4103</span>,
@@ -256,18 +258,19 @@ all subsequent hypotheses that contain the current hypothesis.</p>
             <span class='fl'>0.2866</span>,
             <span class='fl'>0.3362</span>,
             <span class='fl'>0.2871</span>,
-            <span class='fl'>0.4633</span>)
+            <span class='fl'>0.4633</span><span class='op'>)</span>
 
- <span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='fu'>Adjust_raw</span>(<span class='kw'>ctp.struc</span><span class='kw'>=</span><span class='no'>Pairwise</span>, <span class='kw'>p.value</span><span class='kw'>=</span><span class='no'>p.val</span>)
+ <span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'>Adjust_raw</span><span class='op'>(</span>ctp.struc<span class='op'>=</span><span class='va'>Pairwise</span>, p.value<span class='op'>=</span><span class='va'>p.val</span><span class='op'>)</span>
 
  <span class='co'>## details may be documented</span>
 
- <span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='fu'>Adjust_raw</span>(<span class='no'>Pairwise</span>, <span class='kw'>p.value</span><span class='kw'>=</span><span class='no'>p.val</span>
-          ,<span class='kw'>dataset.name</span><span class='kw'>=</span><span class='st'>"my Data"</span>, <span class='kw'>factor.name</span><span class='kw'>=</span><span class='st'>"Factor"</span>
-          ,<span class='kw'>factor.levels</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>,<span class='st'>"B"</span>,<span class='st'>"C"</span>,<span class='st'>"D"</span>), <span class='kw'>model</span><span class='kw'>=</span><span class='no'>y</span>~<span class='no'>Factor</span>
-          ,<span class='kw'>test.name</span><span class='kw'>=</span><span class='st'>"my Test"</span>)
+ <span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'>Adjust_raw</span><span class='op'>(</span><span class='va'>Pairwise</span>, p.value<span class='op'>=</span><span class='va'>p.val</span>
+          ,dataset.name<span class='op'>=</span><span class='st'>"my Data"</span>, factor.name<span class='op'>=</span><span class='st'>"Factor"</span>
+          ,factor.levels<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>,<span class='st'>"B"</span>,<span class='st'>"C"</span>,<span class='st'>"D"</span><span class='op'>)</span>, model<span class='op'>=</span><span class='va'>y</span><span class='op'>~</span><span class='va'>Factor</span>
+          ,test.name<span class='op'>=</span><span class='st'>"my Test"</span><span class='op'>)</span>
 
- <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>result</span>)</div><div class='output co'>#&gt; 
+ <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>result</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Summary of Closed Testing Procedure
 #&gt; ===================================
 #&gt; 
@@ -284,7 +287,8 @@ all subsequent hypotheses that contain the current hypothesis.</p>
 #&gt;        [14]      0.4103       0.7112
 #&gt;        [23]      0.2203       0.4704
 #&gt;        [24]      0.1302       0.4633
-#&gt;        [34]      0.6725       0.7112</div><div class='input'> <span class='fu'><a href='Generic_functions.html'>Display</a></span>(<span class='no'>result</span>)</div><div class='img'><img src='Adjust_raw-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;        [34]      0.6725       0.7112</div><div class='input'> <span class='fu'><a href='summary.ctp.html'>Display</a></span><span class='op'>(</span><span class='va'>result</span><span class='op'>)</span>
+</div><div class='img'><img src='Adjust_raw-2.png' alt='' width='700' height='433' /></div><div class='input'>
 
 </div></pre>
   </div>
@@ -302,7 +306,7 @@ all subsequent hypotheses that contain the current hypothesis.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

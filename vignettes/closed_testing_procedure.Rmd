@@ -308,7 +308,7 @@ It is possible to:
 		summary(Pairwise)
 		
 		# the vector of p-values calculated by another software
-		# (Exampe from Prof. John M. Lachin, The Biostatistics Center Rockville MD)
+		# (Example from Prof. John M. Lachin, The Biostatistics Center Rockville MD)
 		
 		p.val <- c(
 		  0.4374,

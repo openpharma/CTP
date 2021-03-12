@@ -1,4 +1,4 @@
-# CTP 2.0.0.9000
+# CTP 3.0
 
 ## Bug fixes
 

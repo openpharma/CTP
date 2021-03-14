@@ -1,8 +1,8 @@
-pandoc: 2.7.2
-pkgdown: 1.5.1
+pandoc: 2.11.2
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  closed_testing_procedure: closed_testing_procedure.html
   Flowchart: Flowchart.html
-last_built: 2021-03-12T14:02Z
+  closed_testing_procedure: closed_testing_procedure.html
+last_built: 2021-03-12T15:35Z
 

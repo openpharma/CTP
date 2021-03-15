@@ -86,7 +86,7 @@ knitr::opts_chunk$set(collapse = TRUE, out.width="100%"
 
 # The Closure Principle
 
-The closure principle is a way to protect the type-I error from multiple testing. Here, we follow the the description in  [@Bretz2011].
+The closure principle is a way to protect the type-I error from multiple testing. Here, we follow the description in  [@Bretz2011].
    It consists of four steps:
    
 1. Definition of a set ${H} = \{H_1,\ldots, H_n\}$ of elementary hypotheses.

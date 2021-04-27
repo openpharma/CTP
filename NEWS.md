@@ -1,3 +1,9 @@
+# CTP 3.0.1
+
+## Minor change
+
+* Package `rmarkdown` added to suggest field in the `DESCRIPTION` file.
+
 # CTP 3.0
 
 ## Bug fixes

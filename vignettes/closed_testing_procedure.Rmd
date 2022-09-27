@@ -248,6 +248,7 @@ summary(colorectal.chisq, digits=1)
 		print(survdiff(Surv(futime,fustat)~rx, data=ovarian))
 ```
 
+
 Together with the performance subgroups `ecog=1` and `ecog=2` , a factor "subgroups" defined by the combinations of the performance measure `ecog.ps` and the treatment `rx`.
 
 ```{r}		
